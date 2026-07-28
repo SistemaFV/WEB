@@ -68,114 +68,21 @@ onScroll();
 /* ---------- Video de fondo del hero ---------- */
 
 const heroVideo = document.querySelector(".hero-video");
-const heroSection = document.querySelector(".hero");
 
-if (heroVideo && heroSection) {
+if (heroVideo) {
   // Respeta el ahorro de datos del navegador y la preferencia de
   // movimiento reducido: en esos casos no se descarga ni un byte de video
   // y la imagen del hero se queda como está.
   const conn = navigator.connection || {};
   const saveData = conn.saveData === true;
   const slowNetwork = /(^|-)2g$/.test(conn.effectiveType || "");
-  const allowVideo = !prefersReducedMotion && !saveData && !slowNetwork;
 
-  // El avance por scroll solo se ofrece en escritorio con puntero fino.
-  // En táctil el scroll es inercial y el navegador entrega los eventos a
-  // saltos, así que el seek continuo se percibe a tirones: ahí conviene
-  // más el loop automático.
-  const canScrub =
-    allowVideo &&
-    window.matchMedia("(min-width: 1024px)").matches &&
-    window.matchMedia("(pointer: fine)").matches;
-
-  const giveUp = () => {
-    heroVideo.classList.remove("is-ready");
-    heroSection.classList.remove("has-scrub");
-  };
-
-  heroVideo.addEventListener("error", giveUp, { once: true });
-
-  /* Traduce la posición de scroll dentro del hero en un instante del
-     video, suavizando el salto para que no se sienta escalonado. */
-  const startScrub = () => {
-    const FRAME = 1 / 30;
-    let current = 0;
-    let rafId = null;
-    let running = false;
-
-    const targetTime = () => {
-      const runway = heroSection.offsetHeight - window.innerHeight;
-      if (runway <= 0) return 0;
-      const passed = -heroSection.getBoundingClientRect().top;
-      const progress = Math.min(Math.max(passed / runway, 0), 1);
-      return progress * heroVideo.duration;
-    };
-
-    const tick = () => {
-      const target = targetTime();
-      // Interpolación: el video persigue al scroll en vez de saltar a él.
-      current += (target - current) * 0.14;
-      if (Math.abs(target - current) < FRAME / 4) current = target;
-      // Solo se busca si el desfase supera medio fotograma, para no
-      // pedirle al decodificador más trabajo del necesario.
-      if (Math.abs(heroVideo.currentTime - current) > FRAME / 2) {
-        heroVideo.currentTime = current;
-      }
-      rafId = window.requestAnimationFrame(tick);
-    };
-
-    const start = () => {
-      if (running) return;
-      running = true;
-      tick();
-    };
-
-    const stop = () => {
-      if (!running) return;
-      running = false;
-      window.cancelAnimationFrame(rafId);
-    };
-
-    // Solo se calcula mientras el hero está a la vista.
-    if ("IntersectionObserver" in window) {
-      new IntersectionObserver(
-        (entries) => (entries[0].isIntersecting ? start() : stop()),
-        { threshold: 0 }
-      ).observe(heroSection);
-    } else {
-      start();
-    }
-  };
-
-  if (canScrub) {
-    let activated = false;
-
-    const activateScrub = () => {
-      if (activated) return;
-      if (heroVideo.readyState < 3) return;
-      if (!heroVideo.duration || !isFinite(heroVideo.duration)) {
-        giveUp();
-        return;
-      }
-      activated = true;
-      heroVideo.pause();
-      heroVideo.classList.add("is-ready");
-      heroSection.classList.add("has-scrub");
-      startScrub();
-    };
-
-    heroVideo.addEventListener("canplaythrough", activateScrub, { once: true });
-    // Respaldo: algunos navegadores son reacios a emitir `canplaythrough`.
-    // Si el video ya es reproducible pasados unos segundos, se activa
-    // igual; el archivo tiene todos los fotogramas clave, así que buscar
-    // dentro de lo ya descargado funciona sin esperar al resto.
-    window.setTimeout(activateScrub, 5000);
-
-    heroVideo.preload = "auto";
-    heroVideo.src = heroVideo.dataset.srcScrub;
-  } else if (allowVideo) {
-    // Loop automático. En pantallas chicas, la versión liviana (300 KB).
+  if (!prefersReducedMotion && !saveData && !slowNetwork) {
+    // En pantallas chicas se sirve la versión liviana (300 KB en vez de 1,2 MB).
     const useSmall = window.matchMedia("(max-width: 900px)").matches;
+    const src = useSmall
+      ? heroVideo.dataset.srcSm
+      : heroVideo.dataset.src;
 
     heroVideo.addEventListener(
       "canplay",
@@ -185,14 +92,18 @@ if (heroVideo && heroSection) {
         if (attempt && typeof attempt.catch === "function") {
           // Si el navegador bloquea la reproducción automática, se
           // descarta el video y queda la imagen. Nunca un hueco negro.
-          attempt.catch(giveUp);
+          attempt.catch(() => heroVideo.classList.remove("is-ready"));
         }
       },
       { once: true }
     );
 
+    heroVideo.addEventListener("error", () => heroVideo.classList.remove("is-ready"), {
+      once: true,
+    });
+
     heroVideo.preload = "auto";
-    heroVideo.src = useSmall ? heroVideo.dataset.srcSm : heroVideo.dataset.src;
+    heroVideo.src = src;
   }
 }
 
@@ -209,14 +120,6 @@ if (heroMedia && !prefersReducedMotion && window.matchMedia("(min-width: 900px)"
       if (parallaxTicking) return;
 
       window.requestAnimationFrame(() => {
-        // En modo scrubbing el bloque visual va fijo (sticky) y el
-        // movimiento lo da el video, así que desplazarlo aquí lo
-        // desalinearía. Se deja quieto.
-        if (document.querySelector(".hero.has-scrub")) {
-          heroMedia.style.translate = "";
-          parallaxTicking = false;
-          return;
-        }
         const y = window.scrollY;
         // Solo mientras el hero está a la vista. Se usa la propiedad
         // `translate` (independiente de `transform`) para no pisar la
