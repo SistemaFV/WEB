@@ -1406,6 +1406,13 @@ button:focus-visible {
   font-size: 14.5px;
 }
 
+.contact-person {
+  display: block;
+  margin-top: 4px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.55);
+}
+
 /* =========================================================
    FOOTER
    ========================================================= */
