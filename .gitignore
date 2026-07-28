@@ -2,3 +2,8 @@ ui-ux-pro-max-skill/
 skills/
 .DS_Store
 Thumbs.db
+
+# Imagenes fuente en PNG (~10 MB c/u). El sitio sirve solo los derivados
+# .webp/.jpg generados a 2400/1400/900 px, asi que los originales no se
+# publican para no inflar el repo ni el historial de forma permanente.
+assets/img/*.png

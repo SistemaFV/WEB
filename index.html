@@ -3,556 +3,708 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Construcciones FV | Talca, Region del Maule</title>
+    <title>Construcciones FV | Arriendo de maquinaria y obras civiles — Talca, Región del Maule</title>
     <meta
       name="description"
-      content="Construcciones FV en Talca, Region del Maule. Obra residencial, comercial y remodelaciones con gestion clara y terminaciones limpias."
+      content="Arriendo de excavadoras, retroexcavadoras, cargadores, mini excavadoras y cama baja en Talca y la Región del Maule. Además ejecutamos obras civiles: hormigón, losas, puentes y caminos."
     />
+    <meta name="theme-color" content="#101114" />
+    <link rel="canonical" href="https://construccionesfv.cl/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Construcciones FV | Arriendo de maquinaria y obras civiles" />
+    <meta
+      property="og:description"
+      content="Maquinaria disponible y obra ejecutada, con un solo interlocutor. Talca, Región del Maule."
+    />
+    <meta property="og:image" content="assets/img/hero-camino.jpg" />
+    <meta property="og:locale" content="es_CL" />
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;600;700&family=Source+Sans+3:wght@400;500;600&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Source+Sans+3:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
+    <link rel="preload" as="image" href="assets/img/hero-camino.webp" type="image/webp" />
     <link rel="stylesheet" href="styles.css" />
+
+    <!-- Marca que JS está activo. Si el script principal fallara o el
+         navegador no soportara IntersectionObserver, esta clase no se
+         aplica y el contenido se muestra sin animación en vez de quedar
+         invisible. -->
+    <script>
+      document.documentElement.classList.add("js");
+    </script>
   </head>
   <body>
     <a class="skip-link" href="#main">Saltar al contenido</a>
 
     <header class="site-header" data-open="false">
       <div class="container header-inner">
-        <div class="brand">
+        <a class="brand" href="#inicio">
           <div class="logo-mark" aria-hidden="true">FV</div>
           <div class="brand-text">
             <span class="brand-name">Construcciones FV</span>
-            <span class="brand-location">Talca, Region del Maule</span>
+            <span class="brand-location">Talca · Región del Maule</span>
           </div>
-        </div>
+        </a>
 
         <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
-          Menu
+          <span class="nav-toggle-bar" aria-hidden="true"></span>
+          <span class="sr-only">Abrir menú</span>
         </button>
 
-        <nav id="site-nav" class="site-nav" aria-label="Navegacion principal">
-          <a href="#servicios">Servicios</a>
-          <a href="#destacados">Destacados</a>
-          <a href="#galeria">Galeria</a>
-          <a href="#proyectos">Proyectos</a>
-          <a href="#clientes">Clientes</a>
-          <a href="#contacto" class="btn btn-primary">Cotizar</a>
+        <nav id="site-nav" class="site-nav" aria-label="Navegación principal">
+          <a href="#flota">Maquinaria</a>
+          <a href="#obras">Obras civiles</a>
+          <a href="#identidad">Nosotros</a>
+          <a href="#galeria">Galería</a>
+          <a href="#contacto" class="btn btn-primary btn-sm">Cotizar arriendo</a>
         </nav>
       </div>
     </header>
 
     <main id="main">
+      <!-- ============ HERO ============ -->
       <section class="hero" id="inicio">
-        <div class="container hero-grid">
-          <div class="hero-copy" data-reveal>
-            <span class="pill">Constructora local - VII Region</span>
-            <h1>
-              <span class="hero-glow reveal-wipe">
-                Construimos espacios solidos y luminosos para vivir, trabajar y
-                crecer.
-              </span>
-            </h1>
-            <p class="lead">
-              Desde Talca para toda la Region del Maule y otras regiones. Obra
-              residencial, comercial y remodelaciones con gestion clara,
-              seguridad en terreno y terminaciones limpias.
-            </p>
-            <div class="hero-actions">
-              <a class="btn btn-primary" href="#contacto">Cotizar proyecto</a>
-              <a class="btn btn-ghost" href="#servicios">Ver servicios</a>
-            </div>
-            <div class="hero-highlights">
-              <div class="highlight-card">
-                <span class="highlight-title">Gestion transparente</span>
-                <span class="highlight-text">Presupuestos claros y avances visibles.</span>
-              </div>
-              <div class="highlight-card">
-                <span class="highlight-title">Calidad real</span>
-                <span class="highlight-text">Materiales confiables y equipo tecnico.</span>
-              </div>
-              <div class="highlight-card">
-                <span class="highlight-title">Entrega ordenada</span>
-                <span class="highlight-text">Plazos con seguimiento y postventa.</span>
-              </div>
-            </div>
-          </div>
+        <div class="hero-media" aria-hidden="true">
+          <picture>
+            <source
+              type="image/webp"
+              sizes="100vw"
+              srcset="
+                assets/img/hero-camino-sm.webp  900w,
+                assets/img/hero-camino-md.webp 1400w,
+                assets/img/hero-camino.webp    2400w
+              "
+            />
+            <img
+              src="assets/img/hero-camino.jpg"
+              sizes="100vw"
+              srcset="
+                assets/img/hero-camino-sm.jpg  900w,
+                assets/img/hero-camino-md.jpg 1400w,
+                assets/img/hero-camino.jpg    2400w
+              "
+              alt=""
+              fetchpriority="high"
+              decoding="async"
+            />
+          </picture>
+          <div class="hero-scrim"></div>
+          <div class="hero-grain"></div>
+        </div>
 
-          <div class="hero-visual" data-reveal>
-            <div class="card-stack" aria-hidden="true">
-              <div class="stack-card stack-card--one">
-                <span class="stack-label">Equipo en terreno</span>
-                <span class="stack-value">Coordinacion diaria</span>
-              </div>
-              <div class="stack-card stack-card--two">
-                <span class="stack-label">Control de calidad</span>
-                <span class="stack-value">Revision por etapas</span>
-              </div>
-              <div class="stack-card stack-card--three">
-                <span class="stack-label">Avances claros</span>
-                <span class="stack-value">Reportes semanales</span>
-              </div>
+        <div class="container hero-content">
+          <span class="pill pill-hero">Talca · Región del Maule y otras regiones</span>
+          <h1>
+            <span class="h1-line">Arriendo de maquinaria</span>
+            <span class="h1-line h1-accent">lista para trabajar.</span>
+          </h1>
+          <p class="lead">
+            Excavadoras, retroexcavadoras, cargadores y mini excavadoras con traslado
+            resuelto en cama baja propia. Y cuando el proyecto lo necesita, ejecutamos
+            la obra completa: hormigón, losas, puentes y caminos.
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#contacto">Cotizar arriendo</a>
+            <a class="btn btn-glass" href="#flota">Ver maquinaria</a>
+          </div>
+        </div>
+
+        <div class="hero-strip">
+          <div class="container hero-strip-inner">
+            <div class="strip-item">
+              <span class="strip-value">Cama baja propia</span>
+              <span class="strip-label">Traslado incluido o por separado</span>
             </div>
-            <div class="hero-card">
-              <div class="hero-card-header">
-                <span class="tag">Obra destacada</span>
-                <span class="tag tag-solid">Desde Talca</span>
-              </div>
-              <h3>Proyecto integral con enfoque en eficiencia y luz natural.</h3>
-              <p>
-                Coordinamos arquitectura, estructura y terminaciones para lograr
-                espacios funcionales y agradables.
-              </p>
-              <div class="hero-card-grid">
-                <div class="stat">
-                  <span class="stat-label">Planificacion</span>
-                  <span class="stat-value">Control de etapas</span>
-                </div>
-                <div class="stat">
-                  <span class="stat-label">Calidad</span>
-                  <span class="stat-value">Revision en terreno</span>
-                </div>
-                <div class="stat">
-                  <span class="stat-label">Seguridad</span>
-                  <span class="stat-value">Protocolos activos</span>
-                </div>
-                <div class="stat">
-                  <span class="stat-label">Cobertura</span>
-                  <span class="stat-value">Maule y otras regiones</span>
-                </div>
-              </div>
+            <div class="strip-item">
+              <span class="strip-value">Equipos mantenidos</span>
+              <span class="strip-label">Menos detenciones en faena</span>
             </div>
-            <div class="hero-band">
-              <span>Construcciones FV</span>
-              <span>Residencial</span>
-              <span>Comercial</span>
-              <span>Remodelaciones</span>
+            <div class="strip-item">
+              <span class="strip-value">Obra civil propia</span>
+              <span class="strip-label">Hormigón, caminos y puentes</span>
+            </div>
+            <div class="strip-item">
+              <span class="strip-value">Respuesta regional</span>
+              <span class="strip-label">Coordinación directa, sin intermediarios</span>
             </div>
           </div>
         </div>
+
+        <a class="scroll-cue" href="#servicios" aria-label="Bajar al contenido">
+          <span aria-hidden="true"></span>
+        </a>
       </section>
 
-      <section class="section" id="destacados">
-        <div class="container">
-          <div class="section-header" data-reveal>
-            <span class="eyebrow">Destacados</span>
-            <h2>Cuatro servicios clave que se mueven contigo.</h2>
-            <p>
-              Avanza con flechas o deja que el recorrido se mueva solo.
-            </p>
-          </div>
-
-          <div class="carousel" data-carousel data-reveal>
-            <button class="carousel-btn carousel-btn--prev" type="button" data-carousel-prev aria-label="Anterior">
-              <span aria-hidden="true">&lt;</span>
-            </button>
-            <div class="carousel-viewport" aria-live="polite">
-              <div class="carousel-track">
-                <article class="carousel-card">
-                  <span class="carousel-tag">Obra nueva</span>
-                  <h3>Casas listas para habitar con detalle fino.</h3>
-                  <p>
-                    Planificacion clara, terminaciones limpias y control desde el
-                    inicio.
-                  </p>
-                  <div class="carousel-meta">
-                    <span>Planificacion</span>
-                    <span>Calidad</span>
-                  </div>
-                </article>
-                <article class="carousel-card">
-                  <span class="carousel-tag">Remodelacion</span>
-                  <h3>Renovamos espacios sin frenar tu rutina.</h3>
-                  <p>
-                    Coordinamos etapas para intervenir rapido, limpio y seguro.
-                  </p>
-                  <div class="carousel-meta">
-                    <span>Rapidez</span>
-                    <span>Orden</span>
-                  </div>
-                </article>
-                <article class="carousel-card">
-                  <span class="carousel-tag">Comercial</span>
-                  <h3>Locales y bodegas con foco operativo.</h3>
-                  <p>
-                    Circulaciones claras, estructuras firmes y entregas a tiempo.
-                  </p>
-                  <div class="carousel-meta">
-                    <span>Operacion</span>
-                    <span>Plazos</span>
-                  </div>
-                </article>
-                <article class="carousel-card">
-                  <span class="carousel-tag">Gestion</span>
-                  <h3>Control de obra con reportes visibles.</h3>
-                  <p>
-                    Seguimiento semanal y comunicacion directa en cada etapa.
-                  </p>
-                  <div class="carousel-meta">
-                    <span>Seguimiento</span>
-                    <span>Confianza</span>
-                  </div>
-                </article>
-              </div>
-            </div>
-            <button class="carousel-btn carousel-btn--next" type="button" data-carousel-next aria-label="Siguiente">
-              <span aria-hidden="true">&gt;</span>
-            </button>
-          </div>
-        </div>
-      </section>
-
+      <!-- ============ DOS LÍNEAS DE NEGOCIO ============ -->
       <section class="section" id="servicios">
         <div class="container">
           <div class="section-header" data-reveal>
-            <span class="eyebrow">Servicios</span>
-            <h2>Soluciones completas para cada etapa del proyecto.</h2>
+            <span class="eyebrow">Qué hacemos</span>
+            <h2>Dos líneas de trabajo que se complementan.</h2>
             <p>
-              Equipos especializados para ejecutar obra nueva, ampliaciones y
-              remodelaciones con control tecnico y terminaciones limpias.
+              Puedes arrendar solo el equipo, o encargarnos la obra completa. En ambos
+              casos hablas con la misma gente y coordinas en un solo lugar.
             </p>
           </div>
 
-          <div class="service-grid">
-            <article class="service-card" data-reveal>
-              <div class="icon">
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M3 10.5L12 3l9 7.5" />
-                  <path d="M5 9.5V21h14V9.5" />
-                  <path d="M9 21v-6h6v6" />
-                </svg>
-              </div>
-              <h3>Construccion de viviendas</h3>
-              <p>Casas nuevas con estructura solida, aislacion y detalle.</p>
+          <div class="split-grid">
+            <article class="split-card split-card--primary" data-reveal>
+              <span class="split-index">01</span>
+              <h3>Arriendo de maquinaria</h3>
+              <p>
+                Equipos para movimiento de tierra, excavación, carguío y nivelación,
+                con o sin operador según lo que necesites. El traslado lo resolvemos
+                nosotros con cama baja propia.
+              </p>
+              <ul class="tick-list">
+                <li>Excavadora</li>
+                <li>Retroexcavadora</li>
+                <li>Cargador frontal</li>
+                <li>Mini excavadora</li>
+                <li>Cama baja (camión Scania)</li>
+              </ul>
+              <a class="link-arrow" href="#flota">Ver la flota <span aria-hidden="true">→</span></a>
             </article>
-            <article class="service-card" data-reveal>
-              <div class="icon">
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M4 20h16" />
-                  <path d="M6 20V8l6-4 6 4v12" />
-                  <path d="M9 20v-6h6v6" />
-                </svg>
-              </div>
-              <h3>Ampliaciones y remodelaciones</h3>
-              <p>Recuperamos espacios con mejoras funcionales y esteticas.</p>
-            </article>
-            <article class="service-card" data-reveal>
-              <div class="icon">
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M3 21h18" />
-                  <path d="M5 21V7h6v14" />
-                  <path d="M11 21V4h8v17" />
-                  <path d="M8 11h2" />
-                  <path d="M14 8h2" />
-                  <path d="M14 12h2" />
-                  <path d="M14 16h2" />
-                </svg>
-              </div>
-              <h3>Obra comercial</h3>
-              <p>Locales, oficinas y bodegas con enfoque en operatividad.</p>
-            </article>
-            <article class="service-card" data-reveal>
-              <div class="icon">
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M4 15l5-5 4 4 7-7" />
-                  <path d="M20 6v5h-5" />
-                  <path d="M4 20h16" />
-                </svg>
-              </div>
-              <h3>Supervision y control</h3>
-              <p>Planificacion, presupuestos y seguimiento de obra.</p>
+
+            <article class="split-card" data-reveal>
+              <span class="split-index">02</span>
+              <h3>Obras civiles</h3>
+              <p>
+                Ejecutamos partidas de infraestructura donde el movimiento de tierra y
+                el hormigón mandan. Llegamos con nuestra propia maquinaria, lo que
+                acorta plazos y evita coordinar con terceros.
+              </p>
+              <ul class="tick-list">
+                <li>Hormigón</li>
+                <li>Losas</li>
+                <li>Puentes</li>
+                <li>Caminos y circunvalaciones</li>
+                <li>Otras obras a convenir</li>
+              </ul>
+              <a class="link-arrow" href="#obras">Ver obras civiles <span aria-hidden="true">→</span></a>
             </article>
           </div>
         </div>
       </section>
 
-      <section class="section section-alt" id="proyectos">
+      <!-- ============ FLOTA ============ -->
+      <section class="section section-dark" id="flota">
         <div class="container">
           <div class="section-header" data-reveal>
-            <span class="eyebrow">Proyectos</span>
-            <h2>Tipos de obras que realizamos.</h2>
+            <span class="eyebrow eyebrow-dark">Maquinaria</span>
+            <h2>La flota disponible para arriendo.</h2>
             <p>
-              Ejemplos de enfoques habituales. Ajustamos cada proyecto a la
-              necesidad real del cliente.
+              Consulta disponibilidad por fecha y faena. Coordinamos entrega en terreno
+              en la Región del Maule y otras regiones.
             </p>
           </div>
 
-          <div class="project-grid">
-            <article class="project-card" data-reveal>
-              <div class="project-tag">Residencial</div>
-              <h3>Casa familiar con patios funcionales</h3>
+          <div class="fleet-grid">
+            <article class="fleet-card" data-reveal>
+              <div class="fleet-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M3 19h18" />
+                  <path d="M4 19v-4h7v4" />
+                  <path d="M7 15V9h4l3 4" />
+                  <path d="M14 13l4-6" />
+                  <path d="M17 6l3 1-2 4" />
+                </svg>
+              </div>
+              <h3>Excavadora</h3>
               <p>
-                Distribuciones claras, iluminacion natural y terminaciones
-                durables.
+                Excavación profunda, carguío y movimiento de tierra en volumen. El
+                caballo de batalla para caminos y fundaciones.
               </p>
-              <div class="project-meta">
-                <span>Arquitectura + obra</span>
-                <span>Talca</span>
+            </article>
+
+            <article class="fleet-card" data-reveal>
+              <div class="fleet-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M2 19h20" />
+                  <circle cx="7" cy="16" r="3" />
+                  <circle cx="17" cy="16" r="3" />
+                  <path d="M4 13V9h6l2 4" />
+                  <path d="M12 10l4-4 3 3-3 3" />
+                </svg>
+              </div>
+              <h3>Retroexcavadora</h3>
+              <p>
+                Versátil y ágil en espacios acotados. Excava por detrás y carga por
+                delante, ideal para zanjas, matrices y trabajos urbanos.
+              </p>
+            </article>
+
+            <article class="fleet-card" data-reveal>
+              <div class="fleet-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M2 19h20" />
+                  <circle cx="8" cy="16" r="2.5" />
+                  <circle cx="17" cy="16" r="2.5" />
+                  <path d="M6 13V9h6v4" />
+                  <path d="M12 11l-6 -1" />
+                  <path d="M2 15l4-3" />
+                </svg>
+              </div>
+              <h3>Cargador frontal</h3>
+              <p>
+                Carguío de áridos, acopio y despeje. Alto rendimiento cuando hay que
+                mover material rápido y de forma continua.
+              </p>
+            </article>
+
+            <article class="fleet-card" data-reveal>
+              <div class="fleet-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M3 19h18" />
+                  <path d="M5 19v-3h6v3" />
+                  <path d="M8 16v-4h3l2 3" />
+                  <path d="M13 15l3-4" />
+                  <path d="M16 11l2 1-1 3" />
+                </svg>
+              </div>
+              <h3>Mini excavadora</h3>
+              <p>
+                Para faenas con acceso restringido, patios interiores y trabajos donde
+                una máquina grande simplemente no entra.
+              </p>
+            </article>
+
+            <article class="fleet-card fleet-card--wide" data-reveal>
+              <div class="fleet-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M2 17h20" />
+                  <circle cx="6" cy="17" r="2" />
+                  <circle cx="12" cy="17" r="2" />
+                  <circle cx="19" cy="17" r="2" />
+                  <path d="M2 15v-3h5V7h5v8" />
+                  <path d="M12 13h10v2" />
+                </svg>
+              </div>
+              <div class="fleet-wide-body">
+                <h3>Cama baja — camión Scania</h3>
+                <p>
+                  El traslado deja de ser tu problema. Funciona de dos formas:
+                </p>
+                <div class="mode-grid">
+                  <div class="mode">
+                    <span class="mode-tag">Modo 1</span>
+                    <p>
+                      Arriendas una máquina nuestra y nosotros la llevamos y la
+                      retiramos de tu faena.
+                    </p>
+                  </div>
+                  <div class="mode">
+                    <span class="mode-tag">Modo 2</span>
+                    <p>
+                      Arriendas solo la cama baja para trasladar tus propias máquinas
+                      o equipos donde los necesites.
+                    </p>
+                  </div>
+                </div>
               </div>
             </article>
-            <article class="project-card" data-reveal>
-              <div class="project-tag">Comercial</div>
-              <h3>Local con flujo optimizado y bodegas</h3>
-              <p>
-                Espacios pensados para operacion diaria y crecimiento futuro.
-              </p>
-              <div class="project-meta">
-                <span>Obra completa</span>
-                <span>Maule</span>
+          </div>
+
+          <div class="fleet-cta" data-reveal>
+            <p>¿No ves el equipo que necesitas? Consúltanos igual, podemos gestionarlo.</p>
+            <a class="btn btn-primary" href="#contacto">Consultar disponibilidad</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ OBRAS CIVILES ============ -->
+      <section class="section" id="obras">
+        <div class="container">
+          <div class="section-header" data-reveal>
+            <span class="eyebrow">Obras civiles</span>
+            <h2>Infraestructura que se construye con máquina pesada.</h2>
+            <p>
+              Nuestra ventaja es simple: la maquinaria ya es nuestra. Eso significa
+              menos subcontratos, menos esperas y un solo responsable frente al
+              mandante.
+            </p>
+          </div>
+
+          <div class="works-layout">
+            <div class="works-media" data-reveal>
+              <picture>
+                <source
+                  type="image/webp"
+                  sizes="(max-width: 900px) 100vw, 50vw"
+                  srcset="
+                    assets/img/obra-puente-sm.webp  900w,
+                    assets/img/obra-puente-md.webp 1400w
+                  "
+                />
+                <img
+                  src="assets/img/obra-puente-md.jpg"
+                  sizes="(max-width: 900px) 100vw, 50vw"
+                  srcset="
+                    assets/img/obra-puente-sm.jpg  900w,
+                    assets/img/obra-puente-md.jpg 1400w
+                  "
+                  alt="Faena de obra civil con maquinaria pesada trabajando en la construcción de un puente"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </picture>
+            </div>
+
+            <div class="works-list">
+              <article class="work-item" data-reveal>
+                <span class="work-number">01</span>
+                <div>
+                  <h3>Hormigón</h3>
+                  <p>
+                    Fundaciones, radieres, muros y elementos estructurales, con control
+                    de la partida desde la preparación del terreno.
+                  </p>
+                </div>
+              </article>
+              <article class="work-item" data-reveal>
+                <span class="work-number">02</span>
+                <div>
+                  <h3>Losas</h3>
+                  <p>
+                    Ejecución de losas con la preparación de base, moldaje y vaciado
+                    coordinados en una sola secuencia de trabajo.
+                  </p>
+                </div>
+              </article>
+              <article class="work-item" data-reveal>
+                <span class="work-number">03</span>
+                <div>
+                  <h3>Puentes</h3>
+                  <p>
+                    Obras de arte menores y estructuras de cruce, donde el acceso y el
+                    movimiento de tierra definen el plazo real de la obra.
+                  </p>
+                </div>
+              </article>
+              <article class="work-item" data-reveal>
+                <span class="work-number">04</span>
+                <div>
+                  <h3>Caminos y circunvalaciones</h3>
+                  <p>
+                    Escarpe, terraplenes, base y sub-base. Movimiento de tierra y
+                    perfilado con equipos propios en faena.
+                  </p>
+                </div>
+              </article>
+              <article class="work-item" data-reveal>
+                <span class="work-number">05</span>
+                <div>
+                  <h3>Otras obras</h3>
+                  <p>
+                    Ciclovías, saneamiento, despeje de terrenos y partidas asociadas.
+                    Cuéntanos el alcance y lo evaluamos.
+                  </p>
+                </div>
+              </article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ VISIÓN / MISIÓN / PROPUESTA DE VALOR ============ -->
+      <section class="section section-alt" id="identidad">
+        <div class="container">
+          <div class="section-header" data-reveal>
+            <span class="eyebrow">Nosotros</span>
+            <h2>Hacia dónde vamos, qué hacemos y por qué elegirnos.</h2>
+          </div>
+
+          <div class="identity-stack">
+            <article class="identity-card" data-reveal>
+              <div class="identity-head">
+                <span class="identity-step">01</span>
+                <h3>Visión</h3>
               </div>
-            </article>
-            <article class="project-card" data-reveal>
-              <div class="project-tag">Remodelacion</div>
-              <h3>Actualizacion integral de vivienda</h3>
-              <p>
-                Mejora de cocina, banos y areas comunes con tiempos coordinados.
+              <p class="identity-text">
+                Ser la empresa de referencia en arriendo de maquinaria y obras civiles
+                de la Región del Maule: reconocida porque cada equipo que sale de
+                nuestro patio llega operativo, a tiempo y con respaldo real en terreno.
               </p>
-              <div class="project-meta">
-                <span>Remodelacion</span>
-                <span>Region del Maule</span>
+            </article>
+
+            <article class="identity-card" data-reveal>
+              <div class="identity-head">
+                <span class="identity-step">02</span>
+                <h3>Misión</h3>
+              </div>
+              <p class="identity-text">
+                Entregar a constructoras, contratistas y mandantes la maquinaria y la
+                ejecución de obra que sus proyectos necesitan, con equipos mantenidos,
+                traslado resuelto y una coordinación directa que evita tiempos muertos
+                en faena.
+              </p>
+            </article>
+
+            <article class="identity-card identity-card--value" data-reveal>
+              <div class="identity-head">
+                <span class="identity-step">03</span>
+                <h3>Propuesta de valor</h3>
+              </div>
+              <p class="identity-statement">
+                Maquinaria disponible y obra ejecutada,<br />
+                <strong>con un solo interlocutor.</strong>
+              </p>
+              <p class="identity-text">
+                Nuestro posicionamiento no descansa en un solo atributo, sino en la
+                combinación de cuatro beneficios que rara vez se encuentran juntos en
+                un mismo proveedor:
+              </p>
+
+              <div class="value-grid">
+                <div class="value-item">
+                  <span class="value-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M3 17h18" />
+                      <circle cx="7" cy="17" r="2" />
+                      <circle cx="17" cy="17" r="2" />
+                      <path d="M3 15v-4h6V8h6v7" />
+                    </svg>
+                  </span>
+                  <h4>Traslado resuelto</h4>
+                  <p>
+                    Cama baja propia. No dependes de un tercero para que la máquina
+                    llegue ni para devolverla.
+                  </p>
+                </div>
+                <div class="value-item">
+                  <span class="value-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M12 3l7 4v5c0 4-3 7-7 9-4-2-7-5-7-9V7z" />
+                      <path d="M9 12l2 2 4-4" />
+                    </svg>
+                  </span>
+                  <h4>Equipos mantenidos</h4>
+                  <p>
+                    Una máquina detenida cuesta más que su arriendo. Cuidamos la flota
+                    para que eso no ocurra.
+                  </p>
+                </div>
+                <div class="value-item">
+                  <span class="value-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M4 20h16" />
+                      <path d="M6 20V10l6-5 6 5v10" />
+                      <path d="M10 20v-5h4v5" />
+                    </svg>
+                  </span>
+                  <h4>Capacidad de obra</h4>
+                  <p>
+                    No solo arrendamos el equipo: si lo necesitas, ejecutamos la
+                    partida completa con nuestra gente.
+                  </p>
+                </div>
+                <div class="value-item">
+                  <span class="value-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24">
+                      <path d="M12 21s-7-5.5-7-11a7 7 0 1114 0c0 5.5-7 11-7 11z" />
+                      <circle cx="12" cy="10" r="2.5" />
+                    </svg>
+                  </span>
+                  <h4>Cercanía regional</h4>
+                  <p>
+                    Estamos en el Maule. Respuesta rápida, visita a terreno y trato
+                    directo con quien decide.
+                  </p>
+                </div>
               </div>
             </article>
           </div>
         </div>
       </section>
 
+      <!-- ============ PROCESO ============ -->
       <section class="section" id="proceso">
         <div class="container">
           <div class="section-header" data-reveal>
-            <span class="eyebrow">Proceso</span>
-            <h2>Un camino claro para construir con confianza.</h2>
-            <p>
-              Trabajamos con etapas definidas para evitar sorpresas y cuidar
-              cada decision.
-            </p>
+            <span class="eyebrow">Cómo trabajamos</span>
+            <h2>De la consulta a la máquina en faena.</h2>
+            <p>Un proceso corto, sin vueltas y con precios claros desde el inicio.</p>
           </div>
 
           <div class="process-grid">
             <div class="process-step" data-reveal>
               <span class="step-number">01</span>
-              <h3>Levantamiento inicial</h3>
-              <p>Escuchamos tu necesidad, visitamos terreno y definimos alcance.</p>
+              <h3>Cuéntanos la faena</h3>
+              <p>Tipo de trabajo, ubicación, fechas y accesos. Con eso ya podemos orientarte.</p>
             </div>
             <div class="process-step" data-reveal>
               <span class="step-number">02</span>
-              <h3>Propuesta y presupuesto</h3>
-              <p>Entregamos un plan con costos claros y tiempos realistas.</p>
+              <h3>Cotización clara</h3>
+              <p>Equipo recomendado, tarifa, condiciones y traslado. Sin costos escondidos.</p>
             </div>
             <div class="process-step" data-reveal>
               <span class="step-number">03</span>
-              <h3>Ejecucion controlada</h3>
-              <p>Avances visibles, coordinacion de equipo y seguridad en obra.</p>
+              <h3>Traslado y entrega</h3>
+              <p>Coordinamos el envío en cama baja y la máquina llega lista para operar.</p>
             </div>
             <div class="process-step" data-reveal>
               <span class="step-number">04</span>
-              <h3>Entrega y postventa</h3>
-              <p>Revisamos detalles finales y dejamos todo operativo.</p>
+              <h3>Respaldo en terreno</h3>
+              <p>Seguimiento durante el arriendo y respuesta rápida ante cualquier evento.</p>
             </div>
           </div>
         </div>
       </section>
 
-      <section class="section section-alt" id="mvv">
+      <!-- ============ GALERÍA ============ -->
+      <section class="section section-dark" id="galeria">
         <div class="container">
           <div class="section-header" data-reveal>
-            <span class="eyebrow">Identidad</span>
-            <h2>Mision, vision y proposito</h2>
-            <p>Texto temporal. Puedes reemplazar este contenido manana.</p>
-          </div>
-
-          <div class="mvv-grid">
-            <article class="mvv-card" data-reveal>
-              <h3>Mision</h3>
-              <p>
-                Texto temporal sobre la mision de la constructora. Enfocado en
-                calidad, seguridad y confianza.
-              </p>
-            </article>
-            <article class="mvv-card" data-reveal>
-              <h3>Vision</h3>
-              <p>
-                Texto temporal sobre la vision de crecimiento en la region y la
-                excelencia en obra.
-              </p>
-            </article>
-            <article class="mvv-card" data-reveal>
-              <h3>Proposito</h3>
-              <p>
-                Texto temporal sobre el proposito de crear espacios utiles y
-                durables para las personas.
-              </p>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" id="galeria">
-        <div class="container">
-          <div class="section-header" data-reveal>
-            <span class="eyebrow">Galeria</span>
-            <h2>Obras recientes que hablan por si solas.</h2>
-            <p>
-              Puedes reemplazar estas imagenes por proyectos reales.
-            </p>
+            <span class="eyebrow eyebrow-dark">Galería</span>
+            <h2>Maquinaria y obra en terreno.</h2>
+            <p>Reemplaza estas imágenes por fotografías reales de tus faenas y equipos.</p>
           </div>
 
           <div class="gallery-grid">
-            <figure class="gallery-item" data-reveal>
-              <div class="gallery-media gallery-media--1"></div>
-              <figcaption>Vivienda familiar - Talca</figcaption>
+            <figure class="gallery-item gallery-item--lg" data-reveal>
+              <picture>
+                <source
+                  type="image/webp"
+                  sizes="(max-width: 900px) 100vw, 66vw"
+                  srcset="assets/img/hero-camino-sm.webp 900w, assets/img/hero-camino-md.webp 1400w"
+                />
+                <img
+                  src="assets/img/hero-camino-md.jpg"
+                  sizes="(max-width: 900px) 100vw, 66vw"
+                  srcset="assets/img/hero-camino-sm.jpg 900w, assets/img/hero-camino-md.jpg 1400w"
+                  alt="Excavadora cargando un camión tolva durante la construcción de un camino"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </picture>
+              <figcaption>Movimiento de tierra en construcción de camino</figcaption>
             </figure>
+
             <figure class="gallery-item" data-reveal>
-              <div class="gallery-media gallery-media--2"></div>
-              <figcaption>Remodelacion cocina - Maule</figcaption>
+              <picture>
+                <source
+                  type="image/webp"
+                  sizes="(max-width: 900px) 100vw, 33vw"
+                  srcset="assets/img/flota-maquinaria-sm.webp 900w, assets/img/flota-maquinaria-md.webp 1400w"
+                />
+                <img
+                  src="assets/img/flota-maquinaria-md.jpg"
+                  sizes="(max-width: 900px) 100vw, 33vw"
+                  srcset="assets/img/flota-maquinaria-sm.jpg 900w, assets/img/flota-maquinaria-md.jpg 1400w"
+                  alt="Flota de maquinaria pesada disponible para arriendo"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </picture>
+              <figcaption>Flota disponible para arriendo</figcaption>
             </figure>
+
             <figure class="gallery-item" data-reveal>
-              <div class="gallery-media gallery-media--3"></div>
-              <figcaption>Oficina comercial - Centro</figcaption>
-            </figure>
-            <figure class="gallery-item" data-reveal>
-              <div class="gallery-media gallery-media--4"></div>
-              <figcaption>Ampliacion vivienda - Talca</figcaption>
-            </figure>
-            <figure class="gallery-item" data-reveal>
-              <div class="gallery-media gallery-media--5"></div>
-              <figcaption>Bodega industrial - Maule</figcaption>
-            </figure>
-            <figure class="gallery-item" data-reveal>
-              <div class="gallery-media gallery-media--6"></div>
-              <figcaption>Espacios exteriores - Maule</figcaption>
+              <picture>
+                <source
+                  type="image/webp"
+                  sizes="(max-width: 900px) 100vw, 33vw"
+                  srcset="assets/img/obra-puente-sm.webp 900w, assets/img/obra-puente-md.webp 1400w"
+                />
+                <img
+                  src="assets/img/obra-puente-md.jpg"
+                  sizes="(max-width: 900px) 100vw, 33vw"
+                  srcset="assets/img/obra-puente-sm.jpg 900w, assets/img/obra-puente-md.jpg 1400w"
+                  alt="Construcción de puente con grúa y excavadora en el lecho del río"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </picture>
+              <figcaption>Obra civil: estructura de puente</figcaption>
             </figure>
           </div>
         </div>
       </section>
 
-      <section class="section section-alt" id="video">
-        <div class="container video-grid">
-          <div class="video-copy" data-reveal>
-            <span class="eyebrow">Video</span>
-            <h2>La obra en movimiento genera confianza inmediata.</h2>
-            <p>
-              Sube un video real para mostrar el avance, el equipo y la calidad
-              del trabajo en terreno.
-            </p>
-            <a class="btn btn-primary" href="#contacto">Solicitar visita</a>
-          </div>
-          <div class="video-frame" data-reveal>
-            <video class="video-embed" controls muted playsinline poster="assets/video/video-poster.jpg">
-              <source src="assets/video/video-construccion.mp4" type="video/mp4" />
-              Tu navegador no soporta video HTML5.
-            </video>
-            <div class="video-caption">Reemplaza con tu video real.</div>
-          </div>
-        </div>
-      </section>
-
+      <!-- ============ CLIENTES ============ -->
       <section class="section" id="clientes">
         <div class="container">
           <div class="section-header" data-reveal>
             <span class="eyebrow">Clientes</span>
-            <h2>Han confiado en nosotros.</h2>
-            <p>
-              Coloca aqui los logos de clientes o empresas asociadas.
-            </p>
+            <h2>Trabajamos con quienes mueven la región.</h2>
+            <p>Reemplaza estos espacios por los logos de tus clientes y mandantes.</p>
           </div>
         </div>
 
         <div class="logo-marquee" data-reveal>
           <div class="logo-row marquee-left">
             <div class="logo-track">
-              <span class="logo-item">Cliente 01</span>
-              <span class="logo-item">Cliente 02</span>
-              <span class="logo-item">Cliente 03</span>
-              <span class="logo-item">Cliente 04</span>
-              <span class="logo-item">Cliente 05</span>
-              <span class="logo-item">Cliente 06</span>
-              <span class="logo-item">Cliente 01</span>
-              <span class="logo-item">Cliente 02</span>
-              <span class="logo-item">Cliente 03</span>
-              <span class="logo-item">Cliente 04</span>
-              <span class="logo-item">Cliente 05</span>
-              <span class="logo-item">Cliente 06</span>
+              <span class="logo-item">Constructora</span>
+              <span class="logo-item">Mandante</span>
+              <span class="logo-item">Contratista</span>
+              <span class="logo-item">Energía</span>
+              <span class="logo-item">Municipalidad</span>
+              <span class="logo-item">Agrícola</span>
+              <span class="logo-item">Constructora</span>
+              <span class="logo-item">Mandante</span>
+              <span class="logo-item">Contratista</span>
+              <span class="logo-item">Energía</span>
+              <span class="logo-item">Municipalidad</span>
+              <span class="logo-item">Agrícola</span>
             </div>
           </div>
           <div class="logo-row marquee-right">
             <div class="logo-track">
-              <span class="logo-item">Empresa 07</span>
-              <span class="logo-item">Empresa 08</span>
-              <span class="logo-item">Empresa 09</span>
-              <span class="logo-item">Empresa 10</span>
-              <span class="logo-item">Empresa 11</span>
-              <span class="logo-item">Empresa 12</span>
-              <span class="logo-item">Empresa 07</span>
-              <span class="logo-item">Empresa 08</span>
-              <span class="logo-item">Empresa 09</span>
-              <span class="logo-item">Empresa 10</span>
-              <span class="logo-item">Empresa 11</span>
-              <span class="logo-item">Empresa 12</span>
-            </div>
-          </div>
-          <div class="logo-row marquee-left">
-            <div class="logo-track">
-              <span class="logo-item">Marca 13</span>
-              <span class="logo-item">Marca 14</span>
-              <span class="logo-item">Marca 15</span>
-              <span class="logo-item">Marca 16</span>
-              <span class="logo-item">Marca 17</span>
-              <span class="logo-item">Marca 18</span>
-              <span class="logo-item">Marca 13</span>
-              <span class="logo-item">Marca 14</span>
-              <span class="logo-item">Marca 15</span>
-              <span class="logo-item">Marca 16</span>
-              <span class="logo-item">Marca 17</span>
-              <span class="logo-item">Marca 18</span>
+              <span class="logo-item">Vialidad</span>
+              <span class="logo-item">Inmobiliaria</span>
+              <span class="logo-item">Movimiento de tierra</span>
+              <span class="logo-item">Saneamiento</span>
+              <span class="logo-item">Forestal</span>
+              <span class="logo-item">Áridos</span>
+              <span class="logo-item">Vialidad</span>
+              <span class="logo-item">Inmobiliaria</span>
+              <span class="logo-item">Movimiento de tierra</span>
+              <span class="logo-item">Saneamiento</span>
+              <span class="logo-item">Forestal</span>
+              <span class="logo-item">Áridos</span>
             </div>
           </div>
         </div>
       </section>
 
-      <section class="section" id="contacto">
+      <!-- ============ CONTACTO ============ -->
+      <section class="section section-cta" id="contacto">
         <div class="container contact">
           <div class="contact-copy" data-reveal>
-            <span class="eyebrow">Contacto</span>
-            <h2><span class="hero-glow reveal-wipe">Hablemos de tu proyecto.</span></h2>
+            <span class="eyebrow eyebrow-dark">Contacto</span>
+            <h2>Cuéntanos tu faena y te cotizamos.</h2>
             <p>
-              Cuentanos lo que necesitas y armamos una propuesta clara. Puedes
-              contactarnos por correo, WhatsApp o redes sociales.
+              Indícanos el tipo de trabajo, la ubicación y las fechas estimadas. Te
+              respondemos con el equipo recomendado y una tarifa clara.
             </p>
             <div class="contact-actions">
-              <a class="btn btn-primary" href="mailto:contacto@construccionesfv.cl">
-                Escribir por correo
+              <a class="btn btn-primary" href="https://wa.me/56900000000">
+                Escribir por WhatsApp
               </a>
-              <a class="btn btn-ghost" href="https://wa.me/56900000000">
-                WhatsApp directo
+              <a class="btn btn-glass" href="mailto:contacto@construccionesfv.cl">
+                Enviar correo
               </a>
             </div>
           </div>
 
           <div class="contact-cards" data-reveal>
             <div class="contact-card">
-              <h3>Correo</h3>
-              <p>contacto@construccionesfv.cl</p>
-              <a class="link" href="mailto:contacto@construccionesfv.cl">Enviar email</a>
-            </div>
-            <div class="contact-card">
               <h3>WhatsApp</h3>
               <p>+56 9 0000 0000</p>
               <a class="link" href="https://wa.me/56900000000">Abrir chat</a>
             </div>
             <div class="contact-card">
-              <h3>Redes sociales</h3>
-              <div class="social-links">
-                <a class="social-link" href="https://instagram.com/">
-                  <span class="social-icon">IG</span>
-                  Instagram
-                </a>
-                <a class="social-link" href="https://facebook.com/">
-                  <span class="social-icon">FB</span>
-                  Facebook
-                </a>
-              </div>
+              <h3>Correo</h3>
+              <p>contacto@construccionesfv.cl</p>
+              <a class="link" href="mailto:contacto@construccionesfv.cl">Enviar email</a>
+            </div>
+            <div class="contact-card">
+              <h3>Cobertura</h3>
+              <p>Talca y Región del Maule. Consultar por otras regiones.</p>
             </div>
           </div>
         </div>
@@ -561,34 +713,54 @@
 
     <footer class="site-footer">
       <div class="container footer-inner">
-        <div>
+        <div class="footer-brand-block">
           <div class="brand footer-brand">
             <div class="logo-mark" aria-hidden="true">FV</div>
             <div class="brand-text">
               <span class="brand-name">Construcciones FV</span>
-              <span class="brand-location">Talca, Region del Maule</span>
+              <span class="brand-location">Talca · Región del Maule</span>
             </div>
           </div>
           <p class="footer-note">
-            Obra residencial, comercial y remodelaciones con un enfoque claro y
-            responsable.
+            Arriendo de maquinaria pesada y ejecución de obras civiles. Maquinaria
+            disponible y obra ejecutada, con un solo interlocutor.
           </p>
         </div>
-        <div class="footer-links">
-          <a href="#servicios">Servicios</a>
-          <a href="#proyectos">Proyectos</a>
-          <a href="#proceso">Proceso</a>
-          <a href="#contacto">Contacto</a>
+
+        <div class="footer-cols">
+          <div class="footer-col">
+            <span class="footer-title">Maquinaria</span>
+            <a href="#flota">Excavadora</a>
+            <a href="#flota">Retroexcavadora</a>
+            <a href="#flota">Cargador frontal</a>
+            <a href="#flota">Mini excavadora</a>
+            <a href="#flota">Cama baja</a>
+          </div>
+          <div class="footer-col">
+            <span class="footer-title">Obras civiles</span>
+            <a href="#obras">Hormigón</a>
+            <a href="#obras">Losas</a>
+            <a href="#obras">Puentes</a>
+            <a href="#obras">Caminos</a>
+          </div>
+          <div class="footer-col">
+            <span class="footer-title">Empresa</span>
+            <a href="#identidad">Visión y misión</a>
+            <a href="#identidad">Propuesta de valor</a>
+            <a href="#galeria">Galería</a>
+            <a href="#contacto">Contacto</a>
+          </div>
         </div>
       </div>
-      <div class="footer-bottom">
-        <span>Construcciones FV - Talca, Region del Maule</span>
+      <div class="container footer-bottom">
+        <span>© <span id="year">2026</span> Construcciones FV · Talca, Región del Maule</span>
         <span>Todos los derechos reservados</span>
       </div>
     </footer>
 
-    <a class="floating-cta" href="#contacto" aria-label="Ir a contacto">
-      Tienes un proyecto? Hablemos
+    <a class="floating-cta" href="https://wa.me/56900000000" aria-label="Contactar por WhatsApp">
+      <span class="floating-dot" aria-hidden="true"></span>
+      Cotizar por WhatsApp
     </a>
 
     <script src="app.js"></script>
