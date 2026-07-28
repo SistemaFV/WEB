@@ -92,6 +92,22 @@
               decoding="async"
             />
           </picture>
+
+          <!-- El video se superpone a la imagen y aparece con un fundido
+               solo cuando puede reproducirse. La fuente la elige app.js
+               segun ancho de pantalla, y no se descarga nada si el usuario
+               pidio movimiento reducido o esta ahorrando datos. -->
+          <video
+            class="hero-video"
+            muted
+            loop
+            playsinline
+            preload="none"
+            aria-hidden="true"
+            data-src="assets/video/hero-loop.mp4"
+            data-src-sm="assets/video/hero-loop-sm.mp4"
+          ></video>
+
           <div class="hero-scrim"></div>
           <div class="hero-grain"></div>
         </div>

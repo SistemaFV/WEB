@@ -526,6 +526,32 @@ button:focus-visible {
   }
 }
 
+/* Video del hero. Va sobre la imagen y solo se hace visible cuando ya
+   puede reproducirse, para que nunca se vea un hueco negro mientras
+   carga. Si el video no llega a cargar, la imagen queda como estaba. */
+.hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 56%;
+  opacity: 0;
+  transition: opacity 1.1s var(--ease);
+  pointer-events: none;
+}
+
+.hero-video.is-ready {
+  opacity: 1;
+}
+
+/* Cuando el video toma el relevo se detiene el ken-burns de la imagen:
+   el movimiento real del video ya aporta la vida y sumar el zoom
+   resultaria excesivo. */
+.hero-media:has(.hero-video.is-ready) img {
+  animation-play-state: paused;
+}
+
 .hero-scrim {
   position: absolute;
   inset: 0;

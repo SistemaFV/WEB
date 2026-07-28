@@ -65,11 +65,53 @@ window.addEventListener(
 );
 onScroll();
 
+/* ---------- Video de fondo del hero ---------- */
+
+const heroVideo = document.querySelector(".hero-video");
+
+if (heroVideo) {
+  // Respeta el ahorro de datos del navegador y la preferencia de
+  // movimiento reducido: en esos casos no se descarga ni un byte de video
+  // y la imagen del hero se queda como está.
+  const conn = navigator.connection || {};
+  const saveData = conn.saveData === true;
+  const slowNetwork = /(^|-)2g$/.test(conn.effectiveType || "");
+
+  if (!prefersReducedMotion && !saveData && !slowNetwork) {
+    // En pantallas chicas se sirve la versión liviana (300 KB en vez de 1,2 MB).
+    const useSmall = window.matchMedia("(max-width: 900px)").matches;
+    const src = useSmall
+      ? heroVideo.dataset.srcSm
+      : heroVideo.dataset.src;
+
+    heroVideo.addEventListener(
+      "canplay",
+      () => {
+        heroVideo.classList.add("is-ready");
+        const attempt = heroVideo.play();
+        if (attempt && typeof attempt.catch === "function") {
+          // Si el navegador bloquea la reproducción automática, se
+          // descarta el video y queda la imagen. Nunca un hueco negro.
+          attempt.catch(() => heroVideo.classList.remove("is-ready"));
+        }
+      },
+      { once: true }
+    );
+
+    heroVideo.addEventListener("error", () => heroVideo.classList.remove("is-ready"), {
+      once: true,
+    });
+
+    heroVideo.preload = "auto";
+    heroVideo.src = src;
+  }
+}
+
 /* ---------- Parallax suave del hero ---------- */
 
-const heroImg = document.querySelector(".hero-media img");
+const heroMedia = document.querySelector(".hero-media");
 
-if (heroImg && !prefersReducedMotion && window.matchMedia("(min-width: 900px)").matches) {
+if (heroMedia && !prefersReducedMotion && window.matchMedia("(min-width: 900px)").matches) {
   let parallaxTicking = false;
 
   window.addEventListener(
@@ -81,9 +123,9 @@ if (heroImg && !prefersReducedMotion && window.matchMedia("(min-width: 900px)").
         const y = window.scrollY;
         // Solo mientras el hero está a la vista. Se usa la propiedad
         // `translate` (independiente de `transform`) para no pisar la
-        // animación ken-burns que vive en `transform`.
+        // animación ken-burns que vive en `transform` de la imagen.
         if (y < window.innerHeight) {
-          heroImg.style.translate = `0 ${y * 0.22}px`;
+          heroMedia.style.translate = `0 ${y * 0.22}px`;
         }
         parallaxTicking = false;
       });
