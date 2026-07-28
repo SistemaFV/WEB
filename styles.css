@@ -485,12 +485,37 @@ button:focus-visible {
   position: relative;
   width: 100%;
   min-height: 100svh;
+  background: var(--dark);
+}
+
+.hero-sticky {
+  position: relative;
+  min-height: 100svh;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   isolation: isolate;
   overflow: hidden;
-  background: var(--dark);
+}
+
+/* Modo scrubbing: la seccion se alarga para generar recorrido de scroll
+   y el bloque visual queda fijo mientras ese recorrido se consume.
+   Solo lo activa app.js en escritorio y con el video ya descargado. */
+.hero.has-scrub {
+  height: 200svh;
+}
+
+.hero.has-scrub .hero-sticky {
+  position: sticky;
+  top: 0;
+  height: 100svh;
+}
+
+/* Con scrubbing el video manda; el ken-burns de la imagen se detiene
+   para que no compita con el movimiento controlado por el scroll. */
+.hero.has-scrub .hero-media img {
+  animation: none;
+  transform: scale(1.06);
 }
 
 .hero-media {
