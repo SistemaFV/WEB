@@ -1,0 +1,48 @@
+name: Procesar flota de equipos
+
+# Se dispara cuando el panel de administracion deja una foto nueva o cambia
+# equipos.json. El resultado del procesamiento queda fuera del disparador para
+# que el commit de este mismo flujo no lo vuelva a lanzar.
+on:
+  push:
+    branches: [main]
+    paths:
+      - "assets/img/equipos/**"
+      - "!assets/img/equipos/procesados/**"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: equipos-flota
+  cancel-in-progress: true
+
+jobs:
+  procesar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Instalar dependencias
+        run: pip install --quiet pillow
+
+      - name: Generar variantes y regenerar la seccion de flota
+        run: python procesar_equipos.py
+        working-directory: assets/img/equipos
+
+      - name: Publicar si hubo cambios
+        run: |
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "Nada que publicar: la flota ya estaba al dia."
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "Actualizar flota de equipos"
+          git push
