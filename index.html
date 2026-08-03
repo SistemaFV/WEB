@@ -23,7 +23,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700;12..96,800&family=Source+Sans+3:wght@400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Saira+Condensed:wght@600;700;800&display=swap"
       rel="stylesheet"
     />
     <link rel="preload" as="image" href="assets/img/hero-camino.webp" type="image/webp" />
@@ -35,6 +35,18 @@
          invisible. -->
     <script>
       document.documentElement.classList.add("js");
+
+      // El tema se aplica ANTES de pintar. Si esto viviera en app.js, quien
+      // eligió modo oscuro vería un destello blanco en cada carga mientras
+      // baja el script. Por defecto va claro: solo se oscurece si el usuario
+      // lo pidió explícitamente alguna vez.
+      try {
+        if (localStorage.getItem("fv-tema") === "oscuro") {
+          document.documentElement.dataset.theme = "oscuro";
+        }
+      } catch (e) {
+        /* modo privado sin localStorage: se queda en claro */
+      }
     </script>
   </head>
   <body>
@@ -61,6 +73,28 @@
           <a href="#identidad">Nosotros</a>
           <a href="#galeria">Galería</a>
           <a href="#contacto" class="btn btn-primary btn-sm">Cotizar arriendo</a>
+
+          <button
+            class="theme-toggle"
+            type="button"
+            aria-pressed="false"
+            title="Cambiar entre modo claro y oscuro"
+          >
+            <span class="sr-only">Cambiar a modo oscuro</span>
+            <svg class="theme-icon theme-icon--sun" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+              <circle cx="12" cy="12" r="4.4" fill="currentColor" />
+              <g stroke="currentColor" stroke-width="1.9" stroke-linecap="round">
+                <path d="M12 2.4v2.4M12 19.2v2.4M2.4 12h2.4M19.2 12h2.4" />
+                <path d="M5.2 5.2l1.7 1.7M17.1 17.1l1.7 1.7M18.8 5.2l-1.7 1.7M6.9 17.1l-1.7 1.7" />
+              </g>
+            </svg>
+            <svg class="theme-icon theme-icon--moon" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+              <path
+                d="M20 14.2A8.2 8.2 0 0 1 9.8 4a8.4 8.4 0 1 0 10.2 10.2Z"
+                fill="currentColor"
+              />
+            </svg>
+          </button>
 
           <!-- Acceso al sistema interno. Vive en su propio subdominio, no en
                una carpeta de este sitio: así el navegador aísla la sesión del
@@ -473,9 +507,26 @@
       <!-- ============ VISIÓN / MISIÓN / PROPUESTA DE VALOR ============ -->
       <section class="section section-alt" id="identidad">
         <div class="container">
-          <div class="section-header" data-reveal>
-            <span class="eyebrow">Nosotros</span>
-            <h2>Hacia dónde vamos, qué hacemos y por qué elegirnos.</h2>
+          <div class="identity-intro">
+            <div class="section-header" data-reveal>
+              <span class="eyebrow">Nosotros</span>
+              <h2>Hacia dónde vamos, qué hacemos y por qué elegirnos.</h2>
+            </div>
+
+            <!-- Abanico de marca: el logo al centro y el trabajo real a los
+                 costados. Las cartas flotan apenas y se enderezan al pasar el
+                 mouse. -->
+            <div class="brand-fan" data-reveal aria-hidden="true">
+              <figure class="fan-card fan-card--left">
+                <img src="assets/img/obra-puente-sm.webp" alt="" width="900" height="506" loading="lazy" decoding="async" />
+              </figure>
+              <figure class="fan-card fan-card--logo">
+                <img src="assets/logo_oficial/Logo redimensionado.png" alt="" width="2000" height="2000" loading="lazy" decoding="async" />
+              </figure>
+              <figure class="fan-card fan-card--right">
+                <img src="assets/img/flota-maquinaria-sm.webp" alt="" width="900" height="506" loading="lazy" decoding="async" />
+              </figure>
+            </div>
           </div>
 
           <div class="identity-stack">
@@ -691,42 +742,97 @@
           <div class="section-header" data-reveal>
             <span class="eyebrow">Clientes</span>
             <h2>Trabajamos con quienes mueven la región.</h2>
-            <p>Reemplaza estos espacios por los logos de tus clientes y mandantes.</p>
+            <p>
+              Constructoras, mandantes y empresas de energía que ya han trabajado
+              con nuestros equipos en la región y fuera de ella.
+            </p>
           </div>
         </div>
 
         <div class="logo-marquee" data-reveal>
-          <div class="logo-row marquee-left">
-            <div class="logo-track">
-              <span class="logo-item">Constructora</span>
-              <span class="logo-item">Mandante</span>
-              <span class="logo-item">Contratista</span>
-              <span class="logo-item">Energía</span>
-              <span class="logo-item">Municipalidad</span>
-              <span class="logo-item">Agrícola</span>
-              <span class="logo-item">Constructora</span>
-              <span class="logo-item">Mandante</span>
-              <span class="logo-item">Contratista</span>
-              <span class="logo-item">Energía</span>
-              <span class="logo-item">Municipalidad</span>
-              <span class="logo-item">Agrícola</span>
-            </div>
-          </div>
-          <div class="logo-row marquee-right">
-            <div class="logo-track">
-              <span class="logo-item">Vialidad</span>
-              <span class="logo-item">Inmobiliaria</span>
-              <span class="logo-item">Movimiento de tierra</span>
-              <span class="logo-item">Saneamiento</span>
-              <span class="logo-item">Forestal</span>
-              <span class="logo-item">Áridos</span>
-              <span class="logo-item">Vialidad</span>
-              <span class="logo-item">Inmobiliaria</span>
-              <span class="logo-item">Movimiento de tierra</span>
-              <span class="logo-item">Saneamiento</span>
-              <span class="logo-item">Forestal</span>
-              <span class="logo-item">Áridos</span>
-            </div>
+          <div class="logo-row">
+            <ul class="logo-track">
+              <li class="logo-item">
+                <img src="assets/img/logo_clientes/mono/sigdo_koopers.png"
+                     alt="Sigdo Koppers" width="420" height="150" loading="lazy" decoding="async" />
+              </li>
+              <li class="logo-item">
+                <img src="assets/img/logo_clientes/mono/grenergy.png"
+                     alt="Grenergy" width="420" height="150" loading="lazy" decoding="async" />
+              </li>
+              <li class="logo-item">
+                <img src="assets/img/logo_clientes/mono/malpo.png"
+                     alt="Malpo Constructora e Inmobiliaria" width="420" height="150" loading="lazy" decoding="async" />
+              </li>
+              <li class="logo-item">
+                <img src="assets/img/logo_clientes/mono/saurias.png"
+                     alt="Constructora Suarias" width="420" height="150" loading="lazy" decoding="async" />
+              </li>
+              <li class="logo-item">
+                <img src="assets/img/logo_clientes/mono/iSiete.png"
+                     alt="iSiete Constructora" width="420" height="150" loading="lazy" decoding="async" />
+              </li>
+              <li class="logo-item">
+                <img src="assets/img/logo_clientes/mono/independencia.png"
+                     alt="Constructora Independencia" width="420" height="150" loading="lazy" decoding="async" />
+              </li>
+              <li class="logo-item">
+                <img src="assets/img/logo_clientes/mono/ByS_Hormigones.png"
+                     alt="B&S Hormigones" width="420" height="150" loading="lazy" decoding="async" />
+              </li>
+              <li class="logo-item">
+                <img src="assets/img/logo_clientes/mono/rahuen.png"
+                     alt="Rahuen Constructora" width="420" height="150" loading="lazy" decoding="async" />
+              </li>
+              <li class="logo-item">
+                <img src="assets/img/logo_clientes/mono/nuevos_aires.png"
+                     alt="Constructora Nuevos Aires" width="420" height="150" loading="lazy" decoding="async" />
+              </li>
+              <li class="logo-item">
+                <img src="assets/img/logo_clientes/mono/auter.png"
+                     alt="Auter Automática y Regulación" width="420" height="150" loading="lazy" decoding="async" />
+              </li>
+              <li class="logo-item" aria-hidden="true">
+                <img src="assets/img/logo_clientes/mono/sigdo_koopers.png"
+                     alt="" width="420" height="150" loading="lazy" decoding="async" />
+              </li>
+              <li class="logo-item" aria-hidden="true">
+                <img src="assets/img/logo_clientes/mono/grenergy.png"
+                     alt="" width="420" height="150" loading="lazy" decoding="async" />
+              </li>
+              <li class="logo-item" aria-hidden="true">
+                <img src="assets/img/logo_clientes/mono/malpo.png"
+                     alt="" width="420" height="150" loading="lazy" decoding="async" />
+              </li>
+              <li class="logo-item" aria-hidden="true">
+                <img src="assets/img/logo_clientes/mono/saurias.png"
+                     alt="" width="420" height="150" loading="lazy" decoding="async" />
+              </li>
+              <li class="logo-item" aria-hidden="true">
+                <img src="assets/img/logo_clientes/mono/iSiete.png"
+                     alt="" width="420" height="150" loading="lazy" decoding="async" />
+              </li>
+              <li class="logo-item" aria-hidden="true">
+                <img src="assets/img/logo_clientes/mono/independencia.png"
+                     alt="" width="420" height="150" loading="lazy" decoding="async" />
+              </li>
+              <li class="logo-item" aria-hidden="true">
+                <img src="assets/img/logo_clientes/mono/ByS_Hormigones.png"
+                     alt="" width="420" height="150" loading="lazy" decoding="async" />
+              </li>
+              <li class="logo-item" aria-hidden="true">
+                <img src="assets/img/logo_clientes/mono/rahuen.png"
+                     alt="" width="420" height="150" loading="lazy" decoding="async" />
+              </li>
+              <li class="logo-item" aria-hidden="true">
+                <img src="assets/img/logo_clientes/mono/nuevos_aires.png"
+                     alt="" width="420" height="150" loading="lazy" decoding="async" />
+              </li>
+              <li class="logo-item" aria-hidden="true">
+                <img src="assets/img/logo_clientes/mono/auter.png"
+                     alt="" width="420" height="150" loading="lazy" decoding="async" />
+              </li>
+            </ul>
           </div>
         </div>
       </section>

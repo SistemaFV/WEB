@@ -31,6 +31,40 @@ document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") closeNav();
 });
 
+/* ---------- Tema claro / oscuro ---------- */
+
+const CLAVE_TEMA = "fv-tema";
+const temaToggle = document.querySelector(".theme-toggle");
+
+if (temaToggle) {
+  const etiqueta = temaToggle.querySelector(".sr-only");
+  const metaColor = document.querySelector('meta[name="theme-color"]');
+
+  const aplicarTema = (oscuro) => {
+    document.documentElement.dataset.theme = oscuro ? "oscuro" : "claro";
+    temaToggle.setAttribute("aria-pressed", String(oscuro));
+    if (etiqueta) {
+      etiqueta.textContent = oscuro ? "Cambiar a modo claro" : "Cambiar a modo oscuro";
+    }
+    // La barra del navegador en móvil también acompaña al tema.
+    if (metaColor) metaColor.setAttribute("content", oscuro ? "#0e0f12" : "#101114");
+  };
+
+  // El script del <head> ya decidió el tema inicial para evitar el destello;
+  // acá solo se sincronizan el rótulo accesible y el estado del botón.
+  aplicarTema(document.documentElement.dataset.theme === "oscuro");
+
+  temaToggle.addEventListener("click", () => {
+    const oscuro = document.documentElement.dataset.theme !== "oscuro";
+    aplicarTema(oscuro);
+    try {
+      localStorage.setItem(CLAVE_TEMA, oscuro ? "oscuro" : "claro");
+    } catch (e) {
+      /* sin almacenamiento: el cambio vale solo para esta visita */
+    }
+  });
+}
+
 /* ---------- Menú "Ingresar" ---------- */
 
 const loginToggle = document.querySelector(".nav-login-toggle");

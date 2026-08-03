@@ -35,15 +35,26 @@
   --shadow-soft: 0 10px 28px rgba(16, 17, 20, 0.08);
   --shadow-hard: 0 30px 70px rgba(16, 17, 20, 0.30);
 
-  /* Radios */
-  --radius-lg: 22px;
-  --radius-md: 16px;
-  --radius-sm: 10px;
+  /* Radios. Se bajaron: el redondeo muy marcado es lo que hace que una
+     interfaz se lea como plantilla en vez de como producto. */
+  --radius-lg: 16px;
+  --radius-md: 12px;
+  --radius-sm: 8px;
 
   --container: 1240px;
 
-  --font-display: "Bricolage Grotesque", "Source Sans 3", system-ui, sans-serif;
-  --font-body: "Source Sans 3", system-ui, -apple-system, sans-serif;
+  /* Saira Condensed en titulos: condensada e industrial, del mundo de la
+     senaletica de obra, y es la misma del ERP -asi la marca no cambia de voz
+     entre la web y el sistema-. Inter en texto por ser neutra y no competir. */
+  --font-display: "Saira Condensed", "Inter", system-ui, sans-serif;
+  --font-body: "Inter", system-ui, -apple-system, sans-serif;
+
+  /* Anillo interior que aparece al pasar el mouse. Reemplaza al borde fijo:
+     la tarjeta se apoya en su sombra y solo se dibuja el contorno cuando el
+     usuario la apunta. */
+  --ring: inset 0 0 0 1px rgba(16, 17, 20, 0.14);
+  --ring-dark: inset 0 0 0 1px rgba(255, 255, 255, 0.16);
+  --ring-brand: inset 0 0 0 1px rgba(255, 204, 0, 0.55);
 
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
 }
@@ -174,35 +185,31 @@ button:focus-visible {
   font-size: clamp(15px, 1.2vw, 17.5px);
 }
 
+/* Rotulo de seccion. Antes era una pildora con fondo y un punto; ese recurso
+   esta en todas las plantillas y es lo primero que delata una pagina armada
+   con generador. Ahora es solo tipografia y una regla corta de marca: pesa
+   menos y deja que el titular mande. */
 .eyebrow {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  padding: 7px 15px;
-  border-radius: 999px;
-  background: var(--brand-soft);
-  color: #6b5200;
-  font-weight: 700;
-  font-size: 12.5px;
-  letter-spacing: 0.09em;
+  gap: 13px;
+  color: var(--muted);
+  font-family: var(--font-body);
+  font-weight: 600;
+  font-size: 11.5px;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
 }
 
 .eyebrow::before {
   content: "";
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--brand-deep);
+  width: 26px;
+  height: 2px;
+  background: var(--brand);
 }
 
 .eyebrow-dark {
-  background: rgba(255, 204, 0, 0.14);
-  color: var(--brand);
-}
-
-.eyebrow-dark::before {
-  background: var(--brand);
+  color: rgba(255, 255, 255, 0.62);
 }
 
 .pill {
@@ -826,12 +833,11 @@ button:focus-visible {
 .split-card {
   position: relative;
   background: var(--surface);
-  border: 1px solid var(--stroke);
   border-radius: var(--radius-lg);
   padding: 40px 36px;
   overflow: hidden;
   transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease),
-    border-color 0.3s var(--ease);
+    box-shadow 0.3s var(--ease);
 }
 
 .split-card::before {
@@ -850,7 +856,7 @@ button:focus-visible {
 .split-card:hover {
   transform: translateY(-6px);
   box-shadow: var(--shadow);
-  border-color: rgba(255, 204, 0, 0.5);
+  box-shadow: var(--ring-brand), var(--shadow);
 }
 
 .split-card:hover::before {
@@ -924,16 +930,15 @@ button:focus-visible {
 
 .fleet-card {
   background: var(--dark-2);
-  border: 1px solid var(--stroke-dark);
   border-radius: var(--radius-lg);
   padding: 30px 28px;
-  transition: transform 0.3s var(--ease), border-color 0.3s var(--ease),
+  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease),
     background 0.3s var(--ease);
 }
 
 .fleet-card:hover {
   transform: translateY(-6px);
-  border-color: rgba(255, 204, 0, 0.45);
+  box-shadow: var(--ring-brand);
   background: var(--dark-3);
 }
 
@@ -992,7 +997,6 @@ button:focus-visible {
 
 .mode {
   background: rgba(0, 0, 0, 0.28);
-  border: 1px solid var(--stroke-dark);
   border-radius: var(--radius-md);
   padding: 18px 20px;
 }
@@ -1124,7 +1128,6 @@ button:focus-visible {
 
 .identity-card {
   background: var(--surface);
-  border: 1px solid var(--stroke);
   border-radius: var(--radius-lg);
   padding: 40px 38px;
   position: relative;
@@ -1248,10 +1251,9 @@ button:focus-visible {
   background: var(--surface);
   padding: 30px 26px;
   border-radius: var(--radius-lg);
-  border: 1px solid var(--stroke);
   position: relative;
   transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease),
-    border-color 0.3s var(--ease);
+    box-shadow 0.3s var(--ease);
 }
 
 .process-step::after {
@@ -1268,7 +1270,7 @@ button:focus-visible {
 .process-step:hover {
   transform: translateY(-5px);
   box-shadow: var(--shadow);
-  border-color: rgba(255, 204, 0, 0.45);
+  box-shadow: var(--ring-brand), var(--shadow);
 }
 
 .process-step:hover::after {
@@ -1316,7 +1318,6 @@ button:focus-visible {
   overflow: hidden;
   position: relative;
   background: var(--dark-2);
-  border: 1px solid var(--stroke-dark);
 }
 
 .gallery-item--lg {
@@ -1478,15 +1479,14 @@ button:focus-visible {
 
 .contact-card {
   background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--stroke-dark);
   border-radius: var(--radius-md);
   padding: 24px 26px;
   backdrop-filter: blur(8px);
-  transition: border-color 0.3s var(--ease), background 0.3s var(--ease);
+  transition: box-shadow 0.3s var(--ease), background 0.3s var(--ease);
 }
 
 .contact-card:hover {
-  border-color: rgba(255, 204, 0, 0.45);
+  box-shadow: var(--ring-brand);
   background: rgba(255, 255, 255, 0.08);
 }
 
@@ -1889,4 +1889,305 @@ button:focus-visible {
   .hero-strip {
     opacity: 1;
   }
+}
+
+/* =========================================================
+   REFINAMIENTO VISUAL
+   Tarjetas sin borde, tema claro/oscuro, muro de clientes
+   y abanico de marca.
+   ========================================================= */
+
+/* ---------- Tarjetas: elevación en reposo, anillo al apuntar ---------- */
+
+/* Al quitarles el borde quedaban planas contra el fondo. La sombra suave las
+   separa sin dibujar una línea, que es lo que buscábamos. */
+.split-card,
+.identity-card,
+.process-step {
+  box-shadow: var(--shadow-soft);
+}
+
+.identity-card {
+  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+}
+
+.identity-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--ring-brand), var(--shadow);
+}
+
+.mode,
+.gallery-item {
+  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+}
+
+.mode:hover,
+.gallery-item:hover {
+  box-shadow: var(--ring-dark);
+}
+
+/* La píldora del hero también llevaba borde y fondo de color. Se deja como
+   texto sobre un velo apenas perceptible. */
+.pill-hero {
+  border: 0;
+  background: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(8px);
+  font-weight: 600;
+  font-size: 12.5px;
+  letter-spacing: 0.04em;
+}
+
+/* ---------- Interruptor de tema ---------- */
+
+.theme-toggle {
+  width: 38px;
+  height: 38px;
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.26);
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  transition: background 0.25s var(--ease), transform 0.25s var(--ease),
+    border-color 0.25s var(--ease);
+}
+
+.theme-toggle:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.17);
+  border-color: rgba(255, 255, 255, 0.45);
+}
+
+/* Se muestra el icono del modo al que se va a cambiar, no el actual: es lo
+   que el botón hace, no lo que la página es. */
+.theme-icon {
+  display: none;
+}
+
+.theme-icon--moon {
+  display: block;
+}
+
+[data-theme="oscuro"] .theme-icon--moon {
+  display: none;
+}
+
+[data-theme="oscuro"] .theme-icon--sun {
+  display: block;
+}
+
+/* ---------- Tema oscuro ---------- */
+
+[data-theme="oscuro"] {
+  color-scheme: dark;
+
+  --bg: #0e0f12;
+  --surface: #17191e;
+  --surface-alt: #121419;
+  --dark: #14161a;
+  --dark-2: #1a1d22;
+  --dark-3: #22262c;
+
+  --ink: #eceef2;
+  --ink-2: #c4c9d3;
+  --muted: #949cab;
+  --muted-dark: #a2a8b3;
+
+  --stroke: rgba(255, 255, 255, 0.1);
+  --brand-soft: rgba(255, 204, 0, 0.16);
+
+  --shadow: 0 24px 60px rgba(0, 0, 0, 0.55);
+  --shadow-soft: 0 10px 28px rgba(0, 0, 0, 0.4);
+  --shadow-hard: 0 30px 70px rgba(0, 0, 0, 0.6);
+  --ring: inset 0 0 0 1px rgba(255, 255, 255, 0.14);
+}
+
+/* Estos usaban tinta oscura sobre fondo claro de marca; invertida la
+   superficie, había que subir el contraste del texto. */
+[data-theme="oscuro"] .pill {
+  color: var(--brand);
+}
+
+[data-theme="oscuro"] .link {
+  color: var(--brand);
+}
+
+[data-theme="oscuro"] .section-dark {
+  background: #101216;
+}
+
+/* ---------- Muro de clientes ---------- */
+
+.logo-track {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* Los logos vienen normalizados a siluetas monocromas en una caja común, así
+   que basta con darles alto: el ancho sale solo y el peso visual ya está
+   igualado desde el archivo. */
+.logo-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 46px;
+  padding: 0 30px;
+  border: 0;
+  border-radius: 0;
+  background: none;
+}
+
+.logo-item img {
+  height: 100%;
+  width: auto;
+  object-fit: contain;
+  opacity: 0.45;
+  transition: opacity 0.3s var(--ease);
+}
+
+.logo-item:hover img {
+  opacity: 0.9;
+}
+
+/* En oscuro se invierte la tinta negra a blanca. Por eso los logos se
+   generaron como silueta y no a color: un solo archivo sirve en los dos
+   temas. */
+[data-theme="oscuro"] .logo-item img {
+  filter: invert(1);
+  opacity: 0.5;
+}
+
+[data-theme="oscuro"] .logo-item:hover img {
+  opacity: 0.92;
+}
+
+.logo-row:hover .logo-track {
+  animation-play-state: paused;
+}
+
+/* ---------- Abanico de marca ---------- */
+
+.identity-intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: clamp(32px, 5vw, 72px);
+  margin-bottom: clamp(38px, 5vw, 60px);
+}
+
+.brand-fan {
+  position: relative;
+  width: 330px;
+  height: 190px;
+  flex: none;
+}
+
+.fan-card {
+  position: absolute;
+  margin: 0;
+  width: 148px;
+  height: 100px;
+  overflow: hidden;
+  border-radius: 13px;
+  background: var(--surface);
+  box-shadow: 0 16px 38px rgba(16, 17, 20, 0.2);
+  transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease);
+}
+
+.fan-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.fan-card--left {
+  left: 0;
+  top: 44px;
+  transform: rotate(-9deg);
+}
+
+.fan-card--right {
+  right: 0;
+  top: 44px;
+  transform: rotate(9deg);
+}
+
+.fan-card--logo {
+  left: 50%;
+  top: 6px;
+  margin-left: -78px;
+  width: 156px;
+  height: 132px;
+  z-index: 2;
+  background: #fff;
+  padding: 16px;
+  transform: rotate(-2deg);
+  animation: fan-flotar 6s ease-in-out infinite;
+}
+
+.fan-card--logo img {
+  object-fit: contain;
+}
+
+@keyframes fan-flotar {
+  0%,
+  100% {
+    transform: rotate(-2deg) translateY(0);
+  }
+  50% {
+    transform: rotate(-2deg) translateY(-9px);
+  }
+}
+
+/* Al apuntar, las cartas se abren y se enderezan un poco. */
+.brand-fan:hover .fan-card--left {
+  transform: rotate(-13deg) translate(-14px, -4px);
+}
+
+.brand-fan:hover .fan-card--right {
+  transform: rotate(13deg) translate(14px, -4px);
+}
+
+.brand-fan:hover .fan-card {
+  box-shadow: 0 24px 52px rgba(16, 17, 20, 0.28);
+}
+
+@media (max-width: 900px) {
+  .identity-intro {
+    grid-template-columns: 1fr;
+  }
+
+  .brand-fan {
+    justify-self: center;
+  }
+
+  /* El interruptor queda solo en el panel desplegado; se le da alto de fila
+     para que no aparezca como un botón suelto en una esquina. */
+  .theme-toggle {
+    width: 100%;
+    height: 44px;
+    border-radius: var(--radius-sm);
+    margin-top: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-left .logo-track,
+  .marquee-right .logo-track,
+  .fan-card--logo {
+    animation: none;
+  }
+}
+
+/* Las tarjetas de servicios traían un degradado blanco fijo en el CSS, no una
+   variable, así que en modo oscuro quedaban blancas con texto claro encima:
+   ilegibles. Se les da su propio degradado oscuro. */
+[data-theme="oscuro"] .split-card,
+[data-theme="oscuro"] .split-card--primary {
+  background-image: linear-gradient(165deg, #1b1e24 0%, #16181d 60%);
 }
