@@ -159,6 +159,27 @@ def procesar(ruta: str):
     return encajar(recortado), "fondo recortado"
 
 
+def guardar_si_cambio(im: Image.Image, destino: str) -> bool:
+    """Escribe el PNG solo si su contenido visual cambió.
+
+    Comparar los bytes del archivo no sirve: dos versiones de Pillow comprimen
+    distinto y producen archivos diferentes para la misma imagen. Sin esta
+    comprobación, cada ejecución en un entorno distinto al anterior reescribe
+    los diez logos y genera un commit de binarios que no cambia nada.
+    Se comparan los píxeles.
+    """
+    if os.path.exists(destino):
+        try:
+            with Image.open(destino) as previo:
+                if previo.size == im.size and previo.mode == im.mode:
+                    if np.array_equal(np.asarray(previo), np.asarray(im)):
+                        return False
+        except Exception:
+            pass  # ilegible o corrupto: se reescribe
+    im.save(destino, optimize=True)
+    return True
+
+
 def bloque_html(entradas) -> str:
     filas = []
     for pasada in (False, True):
@@ -188,13 +209,18 @@ def main():
     )
 
     entradas = []
+    escritos = 0
     for archivo in archivos:
         clave = os.path.splitext(archivo)[0]
         im, criterio = procesar(os.path.join(AQUI, archivo))
         destino = clave + ".png"
-        im.save(os.path.join(SALIDA, destino), optimize=True)
+        cambio = guardar_si_cambio(im, os.path.join(SALIDA, destino))
+        escritos += cambio
         entradas.append({"archivo": destino, "nombre": nombre_visible(clave)})
-        print(f"  {archivo:26} -> {destino:26} ({criterio})")
+        print(f"  {archivo:26} -> {destino:26} ({criterio})"
+              f"{'' if cambio else '  [sin cambios]'}")
+
+    print(f"\n{escritos} de {len(entradas)} imagenes reescritas.")
 
     # Se ordenan por nombre visible para que el carrusel sea estable entre
     # ejecuciones y el diff del commit sea limpio.
