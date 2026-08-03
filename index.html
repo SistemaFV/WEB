@@ -61,6 +61,50 @@
           <a href="#identidad">Nosotros</a>
           <a href="#galeria">Galería</a>
           <a href="#contacto" class="btn btn-primary btn-sm">Cotizar arriendo</a>
+
+          <!-- Acceso al sistema interno. Vive en su propio subdominio, no en
+               una carpeta de este sitio: así el navegador aísla la sesión del
+               ERP y la cookie nunca llega a esta página pública. -->
+          <div class="nav-login">
+            <button
+              class="btn btn-glass btn-sm nav-login-toggle"
+              type="button"
+              aria-expanded="false"
+              aria-controls="menu-ingresar"
+            >
+              Ingresar
+              <svg
+                class="nav-login-caret"
+                viewBox="0 0 12 8"
+                width="12"
+                height="8"
+                aria-hidden="true"
+              >
+                <path
+                  d="M1 1.5 6 6.5l5-5"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                />
+              </svg>
+            </button>
+
+            <ul class="nav-login-menu" id="menu-ingresar" hidden>
+              <li>
+                <a href="https://sistema.construccionesfv.cl" rel="noopener">
+                  Administración
+                </a>
+              </li>
+              <li>
+                <span class="nav-login-soon" aria-disabled="true">
+                  Colaboradores
+                  <span class="nav-login-badge">Próximamente</span>
+                </span>
+              </li>
+            </ul>
+          </div>
         </nav>
       </div>
     </header>

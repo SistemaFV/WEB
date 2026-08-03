@@ -421,6 +421,84 @@ button:focus-visible {
   color: var(--brand);
 }
 
+/* ── Menú "Ingresar" ──────────────────────────────────────────────────────
+   Patrón "disclosure": un botón que muestra u oculta una lista. No se usan
+   roles ARIA de menú porque esos exigen navegación con flechas; acá basta
+   con `aria-expanded` y enlaces normales, que además funcionan con teclado
+   sin código extra. */
+
+.nav-login {
+  position: relative;
+}
+
+.nav-login-caret {
+  transition: transform 0.25s var(--ease);
+}
+
+.nav-login-toggle[aria-expanded="true"] .nav-login-caret {
+  transform: rotate(180deg);
+}
+
+.nav-login-menu {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  z-index: 60;
+  min-width: 216px;
+  padding: 8px;
+  background: rgba(16, 17, 20, 0.97);
+  backdrop-filter: blur(16px);
+  border: 1px solid var(--stroke-dark);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-hard);
+}
+
+.nav-login-menu[hidden] {
+  display: none;
+}
+
+/* Los ítems son <a> dentro de .site-nav, así que heredarían el subrayado
+   animado del menú principal. Se neutraliza acá. */
+.site-nav .nav-login-menu a,
+.nav-login-soon {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 11px 14px;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.88);
+  transition: background 0.2s var(--ease), color 0.2s var(--ease);
+}
+
+.site-nav .nav-login-menu a::after {
+  display: none;
+}
+
+.site-nav .nav-login-menu a:hover,
+.site-nav .nav-login-menu a:focus-visible {
+  background: rgba(255, 255, 255, 0.09);
+  color: #fff;
+}
+
+.nav-login-soon {
+  color: rgba(255, 255, 255, 0.42);
+  cursor: default;
+}
+
+.nav-login-badge {
+  padding: 3px 8px;
+  border-radius: 999px;
+  background: rgba(255, 204, 0, 0.14);
+  color: rgba(255, 204, 0, 0.82);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
 .nav-toggle {
   display: none;
   width: 46px;
@@ -1680,6 +1758,33 @@ button:focus-visible {
 
   .footer-cols {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* En móvil el menú ya es un panel desplegado: un desplegable flotante
+     dentro de otro se siente atrapado. Acá el submenú empuja el contenido
+     hacia abajo, como un acordeón. */
+  .nav-login {
+    width: 100%;
+  }
+
+  .nav-login-toggle {
+    width: 100%;
+  }
+
+  .nav-login-menu {
+    position: static;
+    min-width: 0;
+    margin-top: 8px;
+    padding: 6px;
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: none;
+  }
+
+  /* El menú móvil le pone borde inferior a todos los enlaces; los del
+     submenú no lo llevan. */
+  .site-nav .nav-login-menu a {
+    padding: 12px 14px;
+    border-bottom: 0;
   }
 }
 

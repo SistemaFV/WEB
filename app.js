@@ -31,6 +31,40 @@ document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") closeNav();
 });
 
+/* ---------- Menú "Ingresar" ---------- */
+
+const loginToggle = document.querySelector(".nav-login-toggle");
+const loginMenu = document.querySelector(".nav-login-menu");
+
+if (loginToggle && loginMenu) {
+  const setLogin = (abierto) => {
+    loginToggle.setAttribute("aria-expanded", String(abierto));
+    loginMenu.hidden = !abierto;
+  };
+
+  loginToggle.addEventListener("click", (event) => {
+    // Sin esto, el listener de "clic afuera" recibiría el mismo clic y
+    // cerraría el menú justo después de abrirlo.
+    event.stopPropagation();
+    setLogin(loginMenu.hidden);
+  });
+
+  document.addEventListener("click", (event) => {
+    if (!loginMenu.hidden && !loginMenu.contains(event.target)) setLogin(false);
+  });
+
+  loginMenu.querySelectorAll("a").forEach((enlace) => {
+    enlace.addEventListener("click", () => setLogin(false));
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && !loginMenu.hidden) {
+      setLogin(false);
+      loginToggle.focus();
+    }
+  });
+}
+
 /* ---------- Header sólido al hacer scroll + CTA flotante ---------- */
 
 const floatingCta = document.querySelector(".floating-cta");
