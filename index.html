@@ -299,10 +299,26 @@
 
           <div class="fleet-grid">
           <!-- EQUIPOS:INICIO -->
-          <article class="fleet-card" data-reveal>
-            <div class="fleet-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 19h18" /><path d="M4 19v-4h7v4" /><path d="M7 15V9h4l3 4" /><path d="M14 13l4-6" /><path d="M17 6l3 1-2 4" /></svg></div>
+          <article class="fleet-card fleet-card--foto" data-reveal>
+            <div class="fleet-foto">
+              <picture>
+                <source
+                  type="image/webp"
+                  sizes="(max-width: 900px) 100vw, 25vw"
+                  srcset="assets/img/equipos/procesados/excavadora-sm.webp 640w, assets/img/equipos/procesados/excavadora-md.webp 1000w"
+                />
+                <img
+                  src="assets/img/equipos/procesados/excavadora-sm.jpg"
+                  sizes="(max-width: 900px) 100vw, 25vw"
+                  srcset="assets/img/equipos/procesados/excavadora-sm.jpg 640w, assets/img/equipos/procesados/excavadora-md.jpg 1000w"
+                  alt="Excavadora"
+                  width="640" height="480" loading="lazy" decoding="async"
+                />
+              </picture>
+            </div>
             <h3>Excavadora</h3>
-            <p>Excavación profunda, carguío y movimiento de tierra en volumen. El caballo de batalla para caminos y fundaciones.</p>
+            <p>Excavación profunda, carguío y movimiento de tierra en volumen.
+El caballo de batalla que necesitas ya está disponible.</p>
           </article>
 
           <article class="fleet-card" data-reveal>
