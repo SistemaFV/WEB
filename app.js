@@ -1,5 +1,5 @@
 /* =========================================================
-   Construcciones FV — Interacciones
+   Construcciones FV / Interacciones
    ========================================================= */
 
 const prefersReducedMotion = window.matchMedia(
@@ -234,7 +234,7 @@ if (prefersReducedMotion || !("IntersectionObserver" in window)) {
   /* Escalonado dentro de cada grilla, para que las tarjetas
      no aparezcan todas de golpe. */
   const staggerGroups = document.querySelectorAll(
-    ".fleet-grid, .split-grid, .process-grid, .works-list, .identity-stack, .gallery-grid"
+    ".fleet-grid, .split-grid, .process-grid, .works-list, .identity-stack"
   );
 
   staggerGroups.forEach((group) => {
