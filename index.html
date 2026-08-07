@@ -285,7 +285,11 @@
       </section>
 
       <!-- ============ FLOTA ============ -->
-      <section class="section section-dark" id="flota">
+      <section class="section section-dark section-constelacion" id="flota">
+        <!-- Trama de puntos. Es decorativa: si el script no corre o el visitante
+             pidió menos movimiento, la sección se ve igual, solo sin la trama. -->
+        <canvas class="constelacion" aria-hidden="true"></canvas>
+
         <div class="container">
           <div class="section-header" data-reveal>
             <span class="eyebrow eyebrow-dark">Maquinaria</span>
@@ -299,25 +303,26 @@
           <div class="fleet-grid">
           <!-- EQUIPOS:INICIO -->
           <article class="fleet-card fleet-card--foto" data-reveal>
-            <div class="fleet-foto">
-              <picture>
-                <source
-                  type="image/webp"
-                  sizes="(max-width: 900px) 100vw, 25vw"
-                  srcset="assets/img/equipos/procesados/excavadora-sm.webp 640w, assets/img/equipos/procesados/excavadora-md.webp 1000w"
-                />
-                <img
-                  src="assets/img/equipos/procesados/excavadora-sm.jpg"
-                  sizes="(max-width: 900px) 100vw, 25vw"
-                  srcset="assets/img/equipos/procesados/excavadora-sm.jpg 640w, assets/img/equipos/procesados/excavadora-md.jpg 1000w"
-                  alt="Excavadora"
-                  width="640" height="480" loading="lazy" decoding="async"
-                />
-              </picture>
+            <div class="fleet-fotos fleet-fotos--1">
+              <div class="fleet-foto">
+                <picture>
+                  <source
+                    type="image/webp"
+                    sizes="(max-width: 900px) 100vw, 25vw"
+                    srcset="assets/img/equipos/procesados/excavadora-1-sm.webp 640w, assets/img/equipos/procesados/excavadora-1-md.webp 1000w"
+                  />
+                  <img
+                    src="assets/img/equipos/procesados/excavadora-1-sm.jpg"
+                    sizes="(max-width: 900px) 100vw, 25vw"
+                    srcset="assets/img/equipos/procesados/excavadora-1-sm.jpg 640w, assets/img/equipos/procesados/excavadora-1-md.jpg 1000w"
+                    alt="Excavadora"
+                    width="640" height="480" loading="lazy" decoding="async"
+                  />
+                </picture>
+              </div>
             </div>
             <h3>Excavadora</h3>
-            <p>Excavación profunda, carguío y movimiento de tierra en volumen.
-El caballo de batalla que necesitas ya está disponible.</p>
+            <p>Excavación profunda, carguío y movimiento de tierra en volumen. El caballo de batalla para caminos y fundaciones.</p>
           </article>
 
           <article class="fleet-card" data-reveal>
@@ -337,42 +342,15 @@ El caballo de batalla que necesitas ya está disponible.</p>
             <h3>Mini excavadora</h3>
             <p>Para faenas con acceso restringido, patios interiores y trabajos donde una máquina grande simplemente no entra.</p>
           </article>
-          <!-- EQUIPOS:FIN -->
 
-            <article class="fleet-card fleet-card--wide" data-reveal>
-              <div class="fleet-icon">
-                <svg viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M2 17h20" />
-                  <circle cx="6" cy="17" r="2" />
-                  <circle cx="12" cy="17" r="2" />
-                  <circle cx="19" cy="17" r="2" />
-                  <path d="M2 15v-3h5V7h5v8" />
-                  <path d="M12 13h10v2" />
-                </svg>
-              </div>
-              <div class="fleet-wide-body">
-                <h3>Cama baja (camión Scania)</h3>
-                <p>
-                  El traslado deja de ser tu problema. Funciona de dos formas:
-                </p>
-                <div class="mode-grid">
-                  <div class="mode">
-                    <span class="mode-tag">Modo 1</span>
-                    <p>
-                      Arriendas una máquina nuestra y nosotros la llevamos y la
-                      retiramos de tu faena.
-                    </p>
-                  </div>
-                  <div class="mode">
-                    <span class="mode-tag">Modo 2</span>
-                    <p>
-                      Arriendas solo la cama baja para trasladar tus propias máquinas
-                      o equipos donde los necesites.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </article>
+          <article class="fleet-card fleet-card--wide" data-reveal>
+            <div class="fleet-icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 17h20" /><circle cx="6" cy="17" r="2" /><circle cx="12" cy="17" r="2" /><circle cx="19" cy="17" r="2" /><path d="M2 15v-3h5V7h5v8" /><path d="M12 13h10v2" /></svg></div>
+            <div class="fleet-wide-body">
+              <h3>Cama baja (camión Scania)</h3>
+              <p>El traslado deja de ser tu problema. Funciona de dos formas: arriendas una máquina nuestra y nosotros la llevamos y la retiramos de tu faena, o arriendas solo la cama baja para mover tus propios equipos donde los necesites.</p>
+            </div>
+          </article>
+          <!-- EQUIPOS:FIN -->
           </div>
 
           <div class="fleet-cta" data-reveal>

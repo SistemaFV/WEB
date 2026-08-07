@@ -1,19 +1,28 @@
 """
 Genera la seccion de flota de la pagina a partir de equipos.json.
 
-El panel de administracion (admin.html) escribe aqui la foto original y la
-ficha del equipo. Este script hace el trabajo pesado: redimensiona, genera
-WebP y JPEG en dos anchos y reescribe el bloque de tarjetas en index.html.
-Lo ejecuta GitHub Actions en cada push que toque esta carpeta.
+El panel de administracion escribe aqui las fotos originales y la ficha del
+equipo. Este script hace el trabajo pesado: redimensiona, genera WebP y JPEG
+en dos anchos y reescribe el bloque de tarjetas en index.html. Lo ejecuta
+GitHub Actions en cada push que toque esta carpeta.
 
 Se separa asi a proposito: el panel solo deja el archivo crudo -no puede
 optimizar imagenes de forma confiable en el navegador- y el servidor de
 Actions se encarga de dejarlas listas para produccion.
 
+Cada equipo admite hasta dos fotos. La cantidad y el campo "ancho" deciden
+la forma de la tarjeta:
+
+    0 fotos, normal   ->  icono + texto, un cuarto de la fila
+    1 foto,  normal   ->  foto + texto, un cuarto de la fila
+    ancho: true       ->  fila completa, con el texto al costado de las fotos
+    2 fotos           ->  siempre fila completa (dos fotos no caben en un cuarto)
+
 Uso:  python procesar_equipos.py
 """
 
 import html
+import io
 import json
 import os
 import re
@@ -31,6 +40,7 @@ ANCHOS = [("sm", 640), ("md", 1000)]
 PROPORCION = 4 / 3  # recorte uniforme: sin esto la grilla queda despareja
 CALIDAD_WEBP = 82
 CALIDAD_JPG = 84
+MAX_FOTOS = 2
 
 # Iconos de respaldo, para los equipos que todavia no tienen foto cargada.
 # La clave la elige el campo "icono" de equipos.json; si no calza ninguna se
@@ -48,9 +58,12 @@ ICONOS = {
     "mini": ('<path d="M3 19h18" /><path d="M5 19v-3h6v3" />'
              '<path d="M8 16v-4h3l2 3" /><path d="M13 15l3-4" />'
              '<path d="M16 11l2 1-1 3" />'),
-    "camion": ('<path d="M2 18h20" /><circle cx="7" cy="17" r="2" />'
-               '<circle cx="17" cy="17" r="2" /><path d="M3 17V8h9v9" />'
-               '<path d="M12 11h4l3 3v3" />'),
+    "camion": ('<path d="M2 17h20" /><circle cx="6" cy="17" r="2" />'
+               '<circle cx="12" cy="17" r="2" /><circle cx="19" cy="17" r="2" />'
+               '<path d="M2 15v-3h5V7h5v8" /><path d="M12 13h10v2" />'),
+    "rodillo": ('<path d="M2 19h20" /><circle cx="7" cy="15" r="4" />'
+                '<circle cx="18" cy="16" r="3" /><path d="M7 11V8h8v4" />'
+                '<path d="M15 10h3l2 3" />'),
     "generico": ('<path d="M3 19h18" /><rect x="6" y="9" width="8" height="6" />'
                  '<path d="M14 12h4l2 3" />'),
 }
@@ -60,6 +73,19 @@ def icono_de(equipo) -> str:
     clave = (equipo.get("icono") or equipo.get("id") or "").lower()
     trazos = ICONOS.get(clave, ICONOS["generico"])
     return f'<svg viewBox="0 0 24 24" aria-hidden="true">{trazos}</svg>'
+
+
+def fotos_de(equipo):
+    """Lista de nombres de archivo del equipo, en orden.
+
+    Acepta el formato antiguo de un solo campo `imagen` para no romper fichas
+    guardadas antes de que existieran las dos fotos.
+    """
+    crudas = equipo.get("imagenes")
+    if crudas is None:
+        una = equipo.get("imagen")
+        crudas = [una] if una else []
+    return [n.strip() for n in crudas if isinstance(n, str) and n.strip()][:MAX_FOTOS]
 
 
 def leer_ficha():
@@ -77,8 +103,6 @@ def guardar_si_cambio(im: Image.Image, destino: str, **opciones) -> bool:
     cada corrida en un entorno con otra version de Pillow reescribiria todas
     las variantes y ensuciaria el historial con binarios identicos.
     """
-    import io
-
     buffer = io.BytesIO()
     im.save(buffer, **opciones)
     nuevo = buffer.getvalue()
@@ -114,36 +138,72 @@ def derivar(origen: str, base: str):
     return escritos
 
 
-def tarjeta(equipo, tiene_foto: bool) -> str:
+def figura(base: str, alt: str, medidas: str) -> str:
+    """Un <picture> responsivo apuntando a las variantes ya generadas."""
+    ruta = "assets/img/equipos/procesados"
+    return f'''<div class="fleet-foto">
+                <picture>
+                  <source
+                    type="image/webp"
+                    sizes="{medidas}"
+                    srcset="{ruta}/{base}-sm.webp 640w, {ruta}/{base}-md.webp 1000w"
+                  />
+                  <img
+                    src="{ruta}/{base}-sm.jpg"
+                    sizes="{medidas}"
+                    srcset="{ruta}/{base}-sm.jpg 640w, {ruta}/{base}-md.jpg 1000w"
+                    alt="{alt}"
+                    width="640" height="480" loading="lazy" decoding="async"
+                  />
+                </picture>
+              </div>'''
+
+
+def tarjeta(equipo, bases) -> str:
+    """Arma el HTML de una tarjeta. `bases` son los nombres de las variantes."""
     titulo = html.escape(equipo["titulo"])
     subtitulo = html.escape(equipo.get("subtitulo", ""))
-    base = equipo["id"]
+    n = len(bases)
 
-    if tiene_foto:
-        medio = f'''            <div class="fleet-foto">
-              <picture>
-                <source
-                  type="image/webp"
-                  sizes="(max-width: 900px) 100vw, 25vw"
-                  srcset="assets/img/equipos/procesados/{base}-sm.webp 640w, assets/img/equipos/procesados/{base}-md.webp 1000w"
-                />
-                <img
-                  src="assets/img/equipos/procesados/{base}-sm.jpg"
-                  sizes="(max-width: 900px) 100vw, 25vw"
-                  srcset="assets/img/equipos/procesados/{base}-sm.jpg 640w, assets/img/equipos/procesados/{base}-md.jpg 1000w"
-                  alt="{titulo}"
-                  width="640" height="480" loading="lazy" decoding="async"
-                />
-              </picture>
-            </div>'''
+    # Dos fotos no entran en una columna de un cuarto de fila: la tarjeta se
+    # promueve a ancha aunque la ficha no lo pida.
+    ancho = bool(equipo.get("ancho")) or n == 2
+
+    clases = ["fleet-card"]
+    if ancho:
+        clases.append("fleet-card--wide")
+    if n:
+        clases.append("fleet-card--foto")
+
+    if n == 0:
+        medio = f'<div class="fleet-icon">{icono_de(equipo)}</div>'
     else:
-        medio = f'            <div class="fleet-icon">{icono_de(equipo)}</div>'
+        if not ancho:
+            medidas = "(max-width: 900px) 100vw, 25vw"
+        elif n == 2:
+            medidas = "(max-width: 900px) 100vw, 28vw"
+        else:
+            medidas = "(max-width: 900px) 100vw, 46vw"
 
-    clase = "fleet-card fleet-card--foto" if tiene_foto else "fleet-card"
-    return (f'          <article class="{clase}" data-reveal>\n'
-            f"{medio}\n"
-            f"            <h3>{titulo}</h3>\n"
-            f"            <p>{subtitulo}</p>\n"
+        alts = [titulo, f"{titulo}, otra vista"]
+        piezas = [figura(b, alts[i], medidas) for i, b in enumerate(bases)]
+        medio = (f'<div class="fleet-fotos fleet-fotos--{n}">\n              '
+                 + "\n              ".join(piezas)
+                 + "\n            </div>")
+
+    # En la tarjeta ancha el texto va envuelto: comparte la fila con las fotos
+    # y necesita su propia caja para poder centrarse en ella.
+    if ancho:
+        cuerpo = (f'<div class="fleet-wide-body">\n'
+                  f"              <h3>{titulo}</h3>\n"
+                  f"              <p>{subtitulo}</p>\n"
+                  f"            </div>")
+    else:
+        cuerpo = f"<h3>{titulo}</h3>\n            <p>{subtitulo}</p>"
+
+    return (f'          <article class="{" ".join(clases)}" data-reveal>\n'
+            f"            {medio}\n"
+            f"            {cuerpo}\n"
             f"          </article>")
 
 
@@ -156,23 +216,24 @@ def main():
     usados = set()
 
     for equipo in equipos:
-        nombre = (equipo.get("imagen") or "").strip()
-        origen = os.path.join(AQUI, nombre) if nombre else ""
-        tiene_foto = bool(nombre) and os.path.exists(origen)
-
-        if nombre and not tiene_foto:
-            print(f"  AVISO  {equipo['id']}: falta la imagen '{nombre}'")
-
-        if tiene_foto:
-            escritos += derivar(origen, equipo["id"])
+        bases = []
+        for indice, nombre in enumerate(fotos_de(equipo), start=1):
+            origen = os.path.join(AQUI, nombre)
+            if not os.path.exists(origen):
+                print(f"  AVISO  {equipo['id']}: falta la imagen '{nombre}'")
+                continue
+            base = f"{equipo['id']}-{indice}"
+            escritos += derivar(origen, base)
             for sufijo, _ in ANCHOS:
-                usados.update({f"{equipo['id']}-{sufijo}.webp", f"{equipo['id']}-{sufijo}.jpg"})
+                usados.update({f"{base}-{sufijo}.webp", f"{base}-{sufijo}.jpg"})
+            bases.append(base)
 
-        tarjetas.append(tarjeta(equipo, tiene_foto))
-        print(f"  {equipo['id']:22} {'con foto' if tiene_foto else 'con icono'}")
+        tarjetas.append(tarjeta(equipo, bases))
+        forma = "ancha" if (equipo.get("ancho") or len(bases) == 2) else "normal"
+        print(f"  {equipo['id']:22} {len(bases)} foto(s), {forma}")
 
     # Limpia variantes de equipos que ya no existen o perdieron su foto.
-    for archivo in os.listdir(SALIDA):
+    for archivo in sorted(os.listdir(SALIDA)):
         if archivo not in usados:
             os.remove(os.path.join(SALIDA, archivo))
             print(f"  eliminado  procesados/{archivo}")

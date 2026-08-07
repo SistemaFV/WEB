@@ -988,35 +988,53 @@ button:focus-visible {
   margin-bottom: 0;
 }
 
-.mode-grid {
+/* ---------- Fotos de la ficha ----------
+   Un equipo admite hasta dos fotos. Con una se ve como siempre; con dos se
+   reparten la fila y la tarjeta pasa a ocupar el ancho completo, porque dos
+   fotos en una columna de un cuarto quedarian del tamano de una estampilla. */
+
+.fleet-fotos {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 16px;
-  margin-top: 20px;
+  gap: 3px;
 }
 
-.mode {
-  background: rgba(0, 0, 0, 0.28);
-  border-radius: var(--radius-md);
-  padding: 18px 20px;
+.fleet-fotos--2 {
+  grid-template-columns: 1fr 1fr;
 }
 
-.mode-tag {
-  display: inline-flex;
-  padding: 4px 11px;
-  border-radius: 999px;
-  background: var(--brand);
-  color: #1a1a1a;
-  font-size: 11.5px;
-  font-weight: 800;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  margin-bottom: 10px;
+/* En la tarjeta ancha las fotos van en una columna y el texto en la otra, asi
+   que dejan de tener proporcion fija: se estiran hasta igualar la altura del
+   texto, con un minimo para que nunca queden como una franja. */
+.fleet-card--wide.fleet-card--foto {
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: 0;
+  padding: 0;
+  align-items: stretch;
 }
 
-.mode p {
-  color: rgba(255, 255, 255, 0.78);
-  font-size: 14.5px;
+.fleet-card--wide.fleet-card--foto .fleet-foto {
+  aspect-ratio: auto;
+  height: 100%;
+  min-height: 268px;
+}
+
+.fleet-card--wide.fleet-card--foto .fleet-wide-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 34px clamp(26px, 3vw, 44px);
+}
+
+/* El texto de la tarjeta ancha ya vive en su propia caja con relleno; el
+   relleno lateral de las tarjetas con foto normales sobraria. */
+.fleet-card--wide.fleet-card--foto h3,
+.fleet-card--wide.fleet-card--foto p {
+  padding-inline: 0;
+}
+
+.fleet-card--wide.fleet-card--foto h3 {
+  margin-top: 0;
+  font-size: clamp(22px, 2.1vw, 28px);
 }
 
 .fleet-cta {
@@ -1181,6 +1199,7 @@ button:focus-visible {
 }
 
 .identity-statement {
+  text-align: center;
   font-family: var(--font-display);
   font-size: clamp(26px, 3.6vw, 46px);
   font-weight: 700;
@@ -1693,6 +1712,18 @@ button:focus-visible {
     gap: 20px;
   }
 
+  /* En una sola columna las fotos vuelven a su proporción fija: sin altura de
+     fila que igualar, estirarlas no tendría contra qué medirse. */
+  .fleet-card--wide.fleet-card--foto {
+    grid-template-columns: 1fr;
+  }
+
+  .fleet-card--wide.fleet-card--foto .fleet-foto {
+    aspect-ratio: 4 / 3;
+    height: auto;
+    min-height: 0;
+  }
+
   .footer-cols {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -1851,14 +1882,6 @@ button:focus-visible {
 .identity-card:hover {
   transform: translateY(-4px);
   box-shadow: var(--ring-brand), var(--shadow);
-}
-
-.mode {
-  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
-}
-
-.mode:hover {
-  box-shadow: var(--ring-dark);
 }
 
 /* La píldora del hero también llevaba borde y fondo de color. Se deja como
@@ -2195,12 +2218,10 @@ button:focus-visible {
    ALINEACIÓN TIPOGRÁFICA
    Títulos al centro, prosa justificada.
 
-   La justificación en columnas angostas abre "ríos" de espacio entre
-   palabras. Por eso va siempre acompañada de `hyphens: auto`: el documento
-   declara lang="es", así que allí donde el navegador tenga el diccionario
-   parte las palabras y los espacios quedan más parejos. Ojo: Chrome de
-   escritorio no siempre lo trae, por eso las fichas de la flota (unos 290 px
-   de ancho) son las que más se estiran.
+   Sin separación silábica a propósito: partir palabras al final de la línea
+   deja guiones sueltos que se leen como un error de la página. El precio es
+   que en las columnas más angostas (las fichas de la flota, unos 290 px) los
+   espacios entre palabras quedan algo más abiertos.
    ========================================================= */
 
 .section-header {
@@ -2214,10 +2235,8 @@ button:focus-visible {
 .fleet-card p,
 .work-item p,
 .process-step p,
-.identity-text,
-.mode p {
+.identity-text {
   text-align: justify;
-  hyphens: auto;
 }
 
 /* --- Títulos de tarjeta al centro --- */
@@ -2265,8 +2284,51 @@ button:focus-visible {
   margin-inline: auto;
 }
 
-/* La ficha del modo de traslado: la etiqueta al centro y el párrafo
-   justificado por la regla de más arriba. */
-.mode {
-  text-align: center;
+/* =========================================================
+   CONSTELACIÓN DE FONDO
+   La misma trama de puntos y líneas que recibe al usuario en el login del
+   ERP. Se repite acá a propósito: es el rasgo que hace que el sitio público
+   y el sistema interno se lean como la misma casa.
+
+   Va en un <canvas> y no en una imagen porque tiene que cubrir cualquier
+   alto de sección sin repetirse ni deformarse, y así pesa cero bytes de
+   descarga. Es puramente decorativa: si el script no llega a correr, la
+   sección se ve como antes.
+   ========================================================= */
+
+.section-constelacion {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.constelacion {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+  /* Entra con una transición para que la trama no aparezca de golpe cuando
+     el script termina de medir la sección. */
+  opacity: 0;
+  transition: opacity 1.4s var(--ease);
+}
+
+.constelacion.lista {
+  opacity: 1;
+}
+
+/* Dos halos muy tenues que le dan profundidad a la trama y evitan que el
+   fondo se lea como un negro plano. El amarillo es el de la marca. */
+.section-constelacion::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(58% 44% at 82% 78%, rgba(255, 204, 0, 0.11), transparent 70%),
+    radial-gradient(48% 40% at 12% 8%, rgba(96, 141, 214, 0.1), transparent 72%);
 }

@@ -277,3 +277,133 @@ if (sections.length && "IntersectionObserver" in window) {
 
   sections.forEach((section) => sectionObserver.observe(section));
 }
+
+/* ---------- Constelación de fondo ---------- */
+
+/* Trama de puntos unidos por líneas, la misma que recibe al usuario en el
+   login del ERP. Se dibuja en un canvas para poder cubrir cualquier alto de
+   sección sin deformarse y sin descargar una imagen.
+
+   Tres cuidados que no se ven pero se notan:
+   - Se pausa cuando la sección sale de pantalla. Una animación corriendo
+     fuera de vista es batería regalada, sobre todo en teléfono.
+   - Con `prefers-reduced-motion` se dibuja un solo cuadro fijo, no se anima.
+   - La densidad se calcula por área, así que en un teléfono no quedan los
+     mismos 90 puntos apretados que en un monitor. */
+
+document.querySelectorAll(".constelacion").forEach((lienzo) => {
+  const ctx = lienzo.getContext("2d", { alpha: true });
+  if (!ctx) return;
+
+  const seccion = lienzo.parentElement;
+  const DISTANCIA = 132; // radio en que dos puntos se unen con una línea
+  let puntos = [];
+  let ancho = 0;
+  let alto = 0;
+  let animando = false;
+  let cuadro = null;
+
+  const medir = () => {
+    const caja = seccion.getBoundingClientRect();
+    // El canvas se dibuja en píxeles físicos y se muestra en píxeles CSS; sin
+    // esto las líneas de 1 px se ven borrosas en pantallas de alta densidad.
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    ancho = Math.round(caja.width);
+    alto = Math.round(caja.height);
+    lienzo.width = Math.round(ancho * dpr);
+    lienzo.height = Math.round(alto * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    const cantidad = Math.round(
+      Math.min(96, Math.max(26, (ancho * alto) / 17000))
+    );
+    puntos = Array.from({ length: cantidad }, () => ({
+      x: Math.random() * ancho,
+      y: Math.random() * alto,
+      vx: (Math.random() - 0.5) * 0.16,
+      vy: (Math.random() - 0.5) * 0.16,
+      r: Math.random() * 1.4 + 0.7,
+    }));
+  };
+
+  const pintar = () => {
+    ctx.clearRect(0, 0, ancho, alto);
+
+    for (let i = 0; i < puntos.length; i += 1) {
+      const a = puntos[i];
+      for (let j = i + 1; j < puntos.length; j += 1) {
+        const b = puntos[j];
+        const dx = a.x - b.x;
+        const dy = a.y - b.y;
+        const d = Math.hypot(dx, dy);
+        if (d > DISTANCIA) continue;
+        // Cuanto más lejos, más tenue: así la malla se desvanece sola en vez
+        // de cortarse de golpe al pasar el umbral.
+        ctx.strokeStyle = `rgba(255, 255, 255, ${(1 - d / DISTANCIA) * 0.21})`;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(a.x, a.y);
+        ctx.lineTo(b.x, b.y);
+        ctx.stroke();
+      }
+    }
+
+    ctx.fillStyle = "rgba(255, 255, 255, 0.52)";
+    puntos.forEach((p) => {
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+      ctx.fill();
+    });
+  };
+
+  const paso = () => {
+    puntos.forEach((p) => {
+      p.x += p.vx;
+      p.y += p.vy;
+      // Rebote en los bordes. Reaparecer por el lado contrario cortaría las
+      // líneas de un lado al otro del canvas.
+      if (p.x < 0 || p.x > ancho) p.vx *= -1;
+      if (p.y < 0 || p.y > alto) p.vy *= -1;
+    });
+    pintar();
+    cuadro = window.requestAnimationFrame(paso);
+  };
+
+  const arrancar = () => {
+    if (animando || prefersReducedMotion) return;
+    animando = true;
+    cuadro = window.requestAnimationFrame(paso);
+  };
+
+  const detener = () => {
+    animando = false;
+    if (cuadro) window.cancelAnimationFrame(cuadro);
+    cuadro = null;
+  };
+
+  medir();
+  pintar();
+  lienzo.classList.add("lista");
+
+  if ("IntersectionObserver" in window) {
+    new IntersectionObserver(
+      ([e]) => (e.isIntersecting ? arrancar() : detener()),
+      { threshold: 0 }
+    ).observe(seccion);
+  } else {
+    arrancar();
+  }
+
+  if ("ResizeObserver" in window) {
+    // La sección cambia de alto cuando entran o salen tarjetas del panel, no
+    // solo cuando se redimensiona la ventana.
+    let espera;
+    new ResizeObserver(() => {
+      window.clearTimeout(espera);
+      espera = window.setTimeout(() => {
+        medir();
+        pintar();
+      }, 150);
+    }).observe(seccion);
+  }
+});

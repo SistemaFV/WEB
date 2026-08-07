@@ -1,34 +1,49 @@
 [
-    {
-        "id": "excavadora",
-        "titulo": "Excavadora",
-        "subtitulo": "Excavación profunda, carguío y movimiento de tierra en volumen.\nEl caballo de batalla que necesitas ya está disponible.",
-        "imagen": "excavadora.jpg",
-        "visible": true,
-        "icono": "excavadora"
-    },
-    {
-        "id": "retroexcavadora",
-        "titulo": "Retroexcavadora",
-        "subtitulo": "Versátil y ágil en espacios acotados. Excava por detrás y carga por delante, ideal para zanjas, matrices y trabajos urbanos.",
-        "imagen": "",
-        "visible": true,
-        "icono": "retroexcavadora"
-    },
-    {
-        "id": "cargador-frontal",
-        "titulo": "Cargador frontal",
-        "subtitulo": "Carguío de áridos, acopio y despeje. Alto rendimiento cuando hay que mover material rápido y de forma continua.",
-        "imagen": "",
-        "visible": true,
-        "icono": "cargador"
-    },
-    {
-        "id": "mini-excavadora",
-        "titulo": "Mini excavadora",
-        "subtitulo": "Para faenas con acceso restringido, patios interiores y trabajos donde una máquina grande simplemente no entra.",
-        "imagen": "",
-        "visible": true,
-        "icono": "mini"
-    }
+  {
+    "id": "excavadora",
+    "titulo": "Excavadora",
+    "subtitulo": "Excavación profunda, carguío y movimiento de tierra en volumen. El caballo de batalla para caminos y fundaciones.",
+    "imagenes": [
+      "excavadora-1.jpg"
+    ],
+    "ancho": false,
+    "visible": true,
+    "icono": "excavadora"
+  },
+  {
+    "id": "retroexcavadora",
+    "titulo": "Retroexcavadora",
+    "subtitulo": "Versátil y ágil en espacios acotados. Excava por detrás y carga por delante, ideal para zanjas, matrices y trabajos urbanos.",
+    "imagenes": [],
+    "ancho": false,
+    "visible": true,
+    "icono": "retroexcavadora"
+  },
+  {
+    "id": "cargador-frontal",
+    "titulo": "Cargador frontal",
+    "subtitulo": "Carguío de áridos, acopio y despeje. Alto rendimiento cuando hay que mover material rápido y de forma continua.",
+    "imagenes": [],
+    "ancho": false,
+    "visible": true,
+    "icono": "cargador"
+  },
+  {
+    "id": "mini-excavadora",
+    "titulo": "Mini excavadora",
+    "subtitulo": "Para faenas con acceso restringido, patios interiores y trabajos donde una máquina grande simplemente no entra.",
+    "imagenes": [],
+    "ancho": false,
+    "visible": true,
+    "icono": "mini"
+  },
+  {
+    "id": "cama-baja",
+    "titulo": "Cama baja (camión Scania)",
+    "subtitulo": "El traslado deja de ser tu problema. Funciona de dos formas: arriendas una máquina nuestra y nosotros la llevamos y la retiramos de tu faena, o arriendas solo la cama baja para mover tus propios equipos donde los necesites.",
+    "imagenes": [],
+    "ancho": true,
+    "visible": true,
+    "icono": "camion"
+  }
 ]
