@@ -25,7 +25,9 @@
         "id": "cargador-frontal",
         "titulo": "Cargador frontal",
         "subtitulo": "Carguío de áridos, acopio y despeje. Alto rendimiento cuando hay que mover material rápido y de forma continua.",
-        "imagenes": [],
+        "imagenes": [
+            "cargador-frontal-1.jpg"
+        ],
         "ancho": false,
         "visible": true,
         "icono": "cargador"
@@ -52,5 +54,16 @@
         "ancho": true,
         "visible": true,
         "icono": "camion"
+    },
+    {
+        "id": "camion-plano-con-rampa",
+        "titulo": "Camion plano con rampa",
+        "subtitulo": "Logística rápida y segura para tus equipos. Diseñado para subir autos, camionetas y miniexcavadoras andando gracias a su plataforma de baja inclinación. La solución ideal para mover maquinaria ligera entre faenas urbanas sin perder tiempo.",
+        "imagenes": [
+            "camion-plano-con-rampa-1.jpg"
+        ],
+        "ancho": false,
+        "visible": true,
+        "icono": "generico"
     }
 ]
